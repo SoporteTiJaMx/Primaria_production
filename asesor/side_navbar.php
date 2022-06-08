@@ -19,7 +19,7 @@
 	}
 ?>
 
-<div class="vertical-nav background_gradient navbar-expand-lg" id="sidebar">
+<div class="vertical-nav background_gradient_new navbar-expand-lg" id="sidebar">
 	<div class="py-3 px-3 mb-3">
 		<div class="media d-flex align-items-center"><img src="<?php echo $avatar . "?x=" . md5(time()); ?>" alt="foto de perfil" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
 			<div class="media-body">
@@ -41,19 +41,14 @@
 
 	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0">Gestión</p>
 	<ul class="nav flex-column mb-0">
-		<li class="nav-item <?php	if ($seccion == 'calendario') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>asesor/calendario.php" class="nav-link text-white ml-3">
-				<i class="fas fa-calendar-alt fa-fw mr-3"></i>Calendario
-			</a>
-		</li>
 		<li class="nav-item <?php	if ($seccion == 'empresas') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>asesor/empresas.php" class="nav-link text-white ml-3">
-				<i class="fas fa-industry fa-fw mr-3"></i>Empresas Juveniles
+				<i class="fas fa-industry fa-fw mr-3"></i>Mis Grupos
 			</a>
 		</li>
 		<li class="nav-item <?php	if ($seccion == 'tablero_control') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>asesor/tablero_control.php" class="nav-link text-white ml-3">
-				<i class="fas fa-digital-tachograph fa-fw mr-3"></i>Tablero de Control
+				<i class="fas fa-digital-tachograph fa-fw mr-3"></i>Activar Sesiones
 			</a>
 		</li>
 		<?php /*
@@ -74,7 +69,7 @@
 		</li>
 	</ul>
 	*/ ?>
-		<ul class="nav flex-column mb-0">
+		<!-- <ul class="nav flex-column mb-0">
 			<li class="nav-item <?php	if ($seccion == 'top3') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>asesor/top3.php" class="nav-link text-white ml-3">
 					<i class="fas fa-star fa-fw mr-3"></i>TOP 3 EMPRESAS
@@ -85,7 +80,7 @@
 					<i class="fas fa-funnel-dollar fa-fw mr-3"></i>Accionistas/Donantes
 				</a>
 			</li>
-		</ul>
+		</ul> -->
 
 	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0" data-toggle="collapse" data-target="#collapse_sesions">Sesiones <i class="fas fa-angle-right fa-fw mr-3"></i></p>
 	<div id="collapse_sesions" class="collapse.show">
