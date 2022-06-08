@@ -87,48 +87,41 @@
 		<ul class="nav flex-column mb-0">
 			<li class="nav-item <?php	if ($seccion == '0') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/0.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i>Bienvenida y Registro
+					<i class="fas fa-angle-right fa-fw mr-3"></i>Primero de Primaria
 				</a>
 			</li>
 			<?php if ($_SESSION["subseccion_general"]>0) { ?>
 			<li class="nav-item <?php	if ($seccion == '1') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/1.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion1"]) AND $_SESSION["sesion1"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 1 - Conviértete en emprendedor
+					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion1"]) AND $_SESSION["sesion1"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Segundo de Primaria
 				</a>
 			</li>
 			<?php } ?>
 			<?php if ($_SESSION["subseccion_general"]>14) { ?>
 			<li class="nav-item <?php	if ($seccion == '2') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/2.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion2"]) AND $_SESSION["sesion2"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 2 - El arte de crear I
+					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion2"]) AND $_SESSION["sesion2"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Tercero de Primaria
 				</a>
 			</li>
 			<?php } ?>
 			<?php if ($_SESSION["subseccion_general"]>24) { ?>
 			<li class="nav-item <?php	if ($seccion == '3') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/3.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion3"]) AND $_SESSION["sesion3"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 3 - El arte de crear II
+					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion3"]) AND $_SESSION["sesion3"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Cuarto de Primaria
 				</a>
 			</li>
 			<?php } ?>
 			<?php if ($_SESSION["subseccion_general"]>32) { ?>
 			<li class="nav-item <?php	if ($seccion == '4') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/4.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion4"]) AND $_SESSION["sesion4"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 4 - Selección de Roles
+					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion4"]) AND $_SESSION["sesion4"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Quinto de Primaria
 				</a>
 			</li>
 			<?php } ?>
 			<?php if ($_SESSION["subseccion_general"]>43) { ?>
 			<li class="nav-item <?php if ($seccion == '5') { echo 'active'; } ?>">
 				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/5.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion5"]) AND $_SESSION["sesion5"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 5 - La Identidad Empresarial
-				</a>
-			</li>
-			<?php } ?>
-			<?php if ($_SESSION["subseccion_general"]>43) { ?>
-			<li class="nav-item <?php if ($seccion == '6') { echo 'active'; } ?>">
-				<a href="<?php echo $RAIZ_SITIO; ?>sesiones/6.php?id=0" class="nav-link text-white ml-3">
-					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion5"]) AND $_SESSION["sesion5"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sesión 6 - Factibilidad Técnica
+					<i class="fas fa-angle-right fa-fw mr-3"></i><?php if (isset($_SESSION["sesion5"]) AND $_SESSION["sesion5"]==1) { ?><i class="fas fa-exclamation-circle fa-lg fa-fw faa-burst animated"></i><?php } ?> Sexto de Primaria
 				</a>
 			</li>
 			<?php } ?>
