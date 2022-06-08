@@ -30,7 +30,7 @@ echo "<META HTTP-EQUIV='REFRESH' CONTENT='500;URL=index.php'>";
 						<h5 class="card-title mb-5"><i class="fas fa-exclamation-triangle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Sesión terminada.</h5>
 						<p class="card-text">Has terminado tu sesión exitosamente.</p>
 						<p class="card-text">En unos segundos serás redirigido a la página de inicio. Da click en el botón para hacerlo de inmediato.</p>
-						<p class="card-text mb-5">¡Gracias por participar en Emprendedores y Empresarios!</p>
+						<p class="card-text mb-5">¡Gracias por participar en los programas de JA México Primaria!</p>
 						<div class="text-right mt-5"><a href="index.php" class="btn btn-warning">Ir al inicio</a></div>
 					</div>
 				</div>
