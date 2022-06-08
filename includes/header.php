@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Emprendedores y Empresarios</title>
+  <title>JA México Primaria</title>
   <link rel="icon" type="image/ico" href="<?php echo $dir; ?>images/favicon.ico">
   <link rel="stylesheet" href="<?php echo $dir; ?>css/bootstrap.css">
   <link rel="stylesheet" href="<?php echo $dir; ?>css/estilos.css">
