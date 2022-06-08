@@ -63,7 +63,8 @@
 }
 
 .background_gradient_new {
-    background: linear-gradient(#3b557c, #174c61) fixed;
+    /* background: linear-gradient(#3b557c, #174c61) fixed; */
+    background: #00A0AF;
 }
 
 .background_gray {
@@ -279,7 +280,7 @@
 
 #sidebar li.nav-item:hover,
 #sidebar li.nav-item.active {
-    background-color: #179f9f;
+    background-color: #285f74;
 }
 
 .checkbox {
