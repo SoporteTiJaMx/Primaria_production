@@ -1,7 +1,7 @@
 
 <html lang="en">
-<?php $dir = "http://" . $_SERVER['HTTP_HOST'] . "/eye/"; ?>
-<?php //$dir = "https://" . $_SERVER['HTTP_HOST'] . "/"; ?>
+<?php //$dir = "http://" . $_SERVER['HTTP_HOST'] . "/eye/"; ?>
+<?php $dir = "https://" . $_SERVER['HTTP_HOST'] . "/"; ?>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
