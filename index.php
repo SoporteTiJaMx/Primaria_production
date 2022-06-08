@@ -29,7 +29,7 @@
 
 				<div class="row pb-5">
 					<div class="col-12 offset-lg-4 col-lg-4 text-center">
-						<img src="images/logo_ja_blanco.png" alt="Logo JA México">
+						<img src="images/logo_ja_blanco.png" class="img-fluid" alt="Logo JA México">
 					</div>
 				</div>
 				<div class="row mx-3">
