@@ -27,12 +27,12 @@
 			<form action="scripts/acceso.php" method="post">
 				<input name="csrf" type="hidden" id="csrf" value="<?php echo $_SESSION['token']; ?>">
 
-				<div class="row pb-5">
+				<div class="row pb-3">
 					<div class="col-12 offset-lg-4 col-lg-4 text-center">
 						<img src="images/logo_ja_blanco.png" class="img-fluid" alt="Logo JA México">
 					</div>
 				</div>
-				<div class="row mx-3">
+				<div class="row mb-3">
 					<div class="col-12">
 						<h4 class="text-center text-white text-spaced-3 pb-2">PROGRAMAS IMPULSA</h4>
 						<h1 class="text-center text-white text-spaced-1 font-weight-bolder pb-4">JUNIOR ACHIEVEMENT PRIMARIA</h1>
