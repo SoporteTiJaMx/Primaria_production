@@ -20,23 +20,8 @@
 
 <div class="mx-5 px-5 mt-3 mb-5 pb-5">
 
-	<?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0) { ?>
-		<h5 class="text-center text-dark_gray pt-1 pb-1"><?php if (isset($_SESSION['licencia_nombre'])) { echo " " . $_SESSION['licencia_nombre']; } ?></h5>
-	<?php } ?>
-
-	<!-- <h6 class="text-center text-dark_gray pt-1 pb-1">Actualmente asesoras <strong><?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0){ echo $_SESSION['num_empresas']; } else { echo 0;} ?></strong> Empresas Juveniles.</h6> -->
-	<?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0) { ?>
-
-		<h6 class="text-center text-dark_gray pt-1 pb-1">A continuación puedes revisar su información general.</h6>
-
-	<?php } else { ?>
-
-		<h6 class="text-center text-dark_gray pt-1 pb-1">Ponte en contacto con JA México para que te vinculen a una Empresa Juvenil.</h6>
-
-	<?php } ?>
-
 	<div class="card shadow mb-5 pb-5 min-width:300px">
-		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">EMPRESAS JUVENILES</div>
+		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">Grupos Actuales</div>
 		<div class="card-body">
 			<div id="empresas_juveniles"></div>
 		</div>
