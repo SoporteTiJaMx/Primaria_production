@@ -21,8 +21,8 @@
 
 	<nav class="mx-5 my-3">
 		<div class="nav nav-tabs" id="nav-tab" role="tablist">
-			<a class="nav-item nav-link active" id="nav-empresas-tab" data-toggle="tab" href="#nav-gestion-empresas" role="tab" aria-controls="nav-gestion-empresas" aria-selected="false">Grupos Activos</a>
-			<a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Sesiones por grupo</a>
+			<a class="nav-item nav-link active" id="nav-empresas-tab" data-toggle="tab" href="#nav-gestion-empresas" role="tab" aria-controls="nav-gestion-empresas" aria-selected="false">Activar Sesiones</a>
+			<!-- <a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Sesiones por grupo</a> -->
 			<!-- <a class="nav-item nav-link" id="nav-puntos_personal-tab" data-toggle="tab" href="#nav-gestion-puntos_personal" role="tab" aria-controls="nav-gestion-puntos_personal" aria-selected="false"></a> -->
 		</div>
 	</nav>
@@ -33,31 +33,20 @@
 			<div class="card shadow mb-5 pb-5 min-width:300px">
 				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">AQUÍ PODRÁS ACTIVAR LAS SESIONES DE TUS GRUPOS</div>
 				<div class="card-body">
-					<p class="text-justify">Este Tablero de Control ayudará en la gestión de las sesiones de los grupos a tu cargo.</p>
+					<p class="text-justify">Selecciona el grupo para poder gestionar las sesiones.</p>
 					
 					<div class="form-row pb-1">
 						<div class="form-group col-1"></div>
 						<div class="form-group row col-8">
-							<label for="select_empresa" class="col-sm-3 col-form-label text-right">Grupo:</label>
+							<label for="select_grupo" class="col-sm-3 col-form-label text-right">Grupo:</label>
 							<div class="col-sm-9">
-							<select name="select_empresa" type="text" id="select_empresa" class="form-control rounded" onChange="filtro_empresa()">
+							<select name="select_grupo" type="text" id="select_grupo" class="form-control rounded" onChange="filtro_grupo()">
 							</select>
 							</div>
 						</div>
 						<div class="form-group col-1"></div>
 					</div>
-					<!-- <div class="form-row pb-1">
-						<div class="form-group col-1"></div>
-						<div class="form-group row col-8">
-							<label for="select_sesion" class="col-sm-3 col-form-label text-right">Sesión:</label>
-							<div class="col-sm-9">
-							<select name="select_sesion" type="text" id="select_sesion" class="form-control rounded" onChange="filtro_empresa()" disabled>
-							</select>
-							</div>
-						</div>
-						<div class="form-group col-1"></div>
-					</div> -->
-					<div id="tabla1"></div>
+					<div id="tabla"></div>
 				</div>
 			</div>
 		</div>
@@ -79,9 +68,9 @@
 					<div class="form-row pb-1">
 						<div class="form-group col-1"></div>
 						<div class="form-group row col-8">
-							<label for="select_empresa2" class="col-sm-3 col-form-label text-right">Empresa:</label>
+							<label for="select_grupo2" class="col-sm-3 col-form-label text-right">Empresa:</label>
 							<div class="col-sm-9">
-							<select name="select_empresa2" type="text" id="select_empresa2" class="form-control rounded" onChange="filtro_empresa2()">
+							<select name="select_grupo2" type="text" id="select_grupo2" class="form-control rounded" onChange="filtro_grupo2()">
 							</select>
 							</div>
 						</div>
@@ -95,11 +84,11 @@
 	</div>
 	<script>
 		$.ajax({
-			url: 'ajax/mis_empresas_filtro.php',
+			url: 'ajax/mis_grupos.php',
 			success: function(data)
 			{
-				$('#select_empresa').append(data);
-				$('#select_empresa2').append(data);
+				$('#select_grupo').append(data);
+				$('#select_grupo2').append(data);
 			}
 		});
 		$.ajax({
@@ -109,23 +98,15 @@
 				$('#select_sesion').append(data);
 			}
 		});
-		function filtro_empresa(){
-			var Empresa_ID = document.getElementById("select_empresa").value;
-			var Sesion_ID = document.getElementById("select_sesion").value;
-			if (Empresa_ID!=0) {
-				$("#select_sesion").removeAttr('disabled');
-			} else {
-				$("#select_sesion").val(0);
-				$("#select_sesion").attr('disabled', 'disabled');
-				$("#tabla").empty();
-			}
+		function filtro_grupo(){
+			var Grupo_ID = document.getElementById("select_grupo").value;
+		
 			var parametros = {
-				"Empresa_ID" : Empresa_ID,
-				"Sesion_ID" : Sesion_ID,
+				"Grupo_ID" : Grupo_ID
 			};
 			$.ajax({
 				data:	parametros,
-				url: "ajax/tablero_querys.php",
+				url: "ajax/gestionar_sesiones.php",
 				type: 'post',
 				success: function(data)
 				{
@@ -140,16 +121,16 @@
 				}
 			});
 		}
-		function filtro_empresa2(){
-			var Empresa_ID = document.getElementById("select_empresa2").value;
-			if (Empresa_ID!=0) {
+		function filtro_grupo2(){
+			var Grupo_ID = document.getElementById("select_grupo2").value;
+			if (Grupo_ID!=0) {
 				$("#tableToExcel2").removeAttr('disabled');
 			} else {
 				$("#tableToExcel2").attr('disabled', 'disabled');
 				$("#tabla2").empty();
 			}
 			var parametros = {
-				"Empresa_ID" : Empresa_ID,
+				"Grupo_ID" : Grupo_ID,
 			};
 			$.ajax({
 				data:	parametros,

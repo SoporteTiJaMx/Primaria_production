@@ -15,7 +15,7 @@ if(
 		$stmt->execute();
 		$stmt->bind_result($Grupo_ID, $Grupo_nombre, $Grupo_estatus, $Escuela_ID, $Escuela_nombre);
 
-		$select_empresa = "<option value='0'>Selecciona empresa</option>";
+		$select_empresa = "<option value='0'>Selecciona un grupo</option>";
 		while ($stmt->fetch()) {
 			$select_empresa.="<option value=" . $Grupo_ID . ">" . $Grupo_nombre . " de " . $Escuela_nombre .  "</option>";
 		}

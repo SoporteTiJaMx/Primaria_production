@@ -47,7 +47,7 @@
 			</a>
 		</li>
 		<li class="nav-item <?php	if ($seccion == 'tablero_control') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>asesor/tablero_control.php" class="nav-link text-white ml-3">
+			<a href="<?php echo $RAIZ_SITIO; ?>asesor/sesiones_control.php" class="nav-link text-white ml-3">
 				<i class="fas fa-digital-tachograph fa-fw mr-3"></i>Activar Sesiones
 			</a>
 		</li>
