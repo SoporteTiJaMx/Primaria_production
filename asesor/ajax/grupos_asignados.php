@@ -15,12 +15,11 @@ if(
 		$stmt->bind_result($Grupo_ID, $Grupo_nombre, $Proyecto_ID, $Grupo_estatus, $Escuela_ID, $Escuela_nombre);
 
 		$tabla = "
-			<table id='empresas_juveniles_table' class='table table-hover dt-responsive nowrap' style='width:100%'>
+			<table id='grupos_asignados_table' class='table table-hover dt-responsive nowrap' style='width:100%'>
 				<thead>
 					<tr>
-						<th>Empresa</th>
+						<th>Grupo</th>
 						<th>Escuela</th>
-						<th>Producto</th>
 						<th>Integrantes</th>
 						<th>Accesos al portal / Último acceso</th>
 					</tr>
@@ -40,7 +39,7 @@ if(
 			$Datos_Alumnos = "<br>";
 			$Datos_accesos = "<br>";
 			include_once('../../scripts/conexion2.php');
-			$resultado = mysqli_query($con2, "SELECT alumnos.Alumno_ID, alumnos.Alumno_nombre, alumnos.Alumno_ap_paterno, alumnos.Alumno_ap_materno, alumnos.Puesto_ID, alumnos.Alumno_estatus, puestos.Puesto_nombre, usuarios.Num_accesos, usuarios.UltimoAcceso FROM alumnos INNER JOIN usuarios ON alumnos.User_ID=usuarios.User_ID LEFT JOIN puestos ON puestos.Puesto_ID = alumnos.Puesto_ID WHERE Grupo_ID=$Grupo_ID order by alumnos.Puesto_ID");
+			$resultado = mysqli_query($con2, "SELECT alumnos.Alumno_ID, alumnos.Alumno_nombre, alumnos.Alumno_ap_paterno, alumnos.Alumno_ap_materno, alumnos.Alumno_estatus, usuarios.Num_accesos, usuarios.UltimoAcceso FROM alumnos INNER JOIN usuarios ON alumnos.User_ID=usuarios.User_ID WHERE Grupo_ID=$Grupo_ID order by alumnos.Alumno_nombre");
 			while ($fila = mysqli_fetch_array($resultado)) {
 				$Datos_Alumnos .= $fila[1] . " " . $fila[2] . " " . $fila[3] . "  - " . $fila[6] . "<br>";
 				if ($fila[8] != "") {
@@ -58,19 +57,19 @@ if(
 				$acciones = "<td class='align-middle text-center'></td>";
 			}*/
 
-			$tabla.="<tr>
-				<td class='align-middle'>" . $Grupo_nombre . "</td>
-				<td class='align-middle'>" . $Escuela_nombre . "</td>
-				<td class='align-middle'>" . $Proyecto_ID . "</td>
-				<td class='align-middle no-wrap'>" . $Datos_Alumnos . "</td>
-				<td class='align-middle wrap'>" . $Datos_accesos . "</td>
-			</tr>";
+			$tabla.=
+				"<tr>
+					<td class='align-middle'>" . $Grupo_nombre . "</td>
+					<td class='align-middle'>" . $Escuela_nombre . "</td>
+					<td class='align-middle no-wrap'>" . $Datos_Alumnos . "</td>
+					<td class='align-middle wrap'>" . $Datos_accesos . "</td>
+				</tr>";
 		}
 		$tabla.="</tbody>
 			</table>";
 		$stmt->close();
 	} else {
-		$tabla = "No tienes empresas juveniles asignadas spara tu asesoría.";
+		$tabla = "No tienes grupos asignados actualmente, revisa con la oficina de Junior Achivement.";
 	}
 
 	echo $tabla;
