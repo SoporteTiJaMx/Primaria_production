@@ -28,7 +28,7 @@
 
 		<nav class="navbar background_gray">
 			<a class="nav-link d-none d-lg-block" id="sidebarCollapse" href="#"><i class="fas fa-bars fa-lg fa-fw mr-2 text-orange"></i></a>
-			<a class="navbar-brand text-dark-gray font-weight-bold">EMPRENDEDORES Y EMPRESARIOS </a>
+			<a class="navbar-brand text-dark-gray font-weight-bold">Programas de Primaria de Junior Achievement México</a>
 			<div class="my-2 my-lg-0">
 				<a class="nav-link d-sm-block d-lg-inline" href="../asesor.php"><i class="fas fa-home fa-lg fa-fw mr-1 text-orange"></i></a>
 				<a class="nav-link d-sm-block d-lg-inline" href="../salir.php"><i class="fas fa-sign-out-alt fa-lg fa-fw mr-1 text-orange"></i></a>

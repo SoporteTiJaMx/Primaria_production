@@ -24,7 +24,7 @@
 		<h5 class="text-center text-dark_gray pt-1 pb-1"><?php if (isset($_SESSION['licencia_nombre'])) { echo " " . $_SESSION['licencia_nombre']; } ?></h5>
 	<?php } ?>
 
-	<h6 class="text-center text-dark_gray pt-1 pb-1">Actualmente asesoras <strong><?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0){ echo $_SESSION['num_empresas']; } else { echo 0;} ?></strong> Empresas Juveniles.</h6>
+	<!-- <h6 class="text-center text-dark_gray pt-1 pb-1">Actualmente asesoras <strong><?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0){ echo $_SESSION['num_empresas']; } else { echo 0;} ?></strong> Empresas Juveniles.</h6> -->
 	<?php if (isset($_SESSION['num_empresas']) AND $_SESSION['num_empresas'] > 0) { ?>
 
 		<h6 class="text-center text-dark_gray pt-1 pb-1">A continuación puedes revisar su información general.</h6>
