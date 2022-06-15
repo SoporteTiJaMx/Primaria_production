@@ -8,11 +8,11 @@ if(
 
 	$Asesor_ID = $_POST['Asesor_ID'];
 
-	$query = "SELECT empresas.Empresa_ID, empresas.Empresa_nombre, empresas.Empresa_producto, empresas.Empresa_estatus, empresas.Escuela_ID, escuelas.Escuela_nombre FROM empresas LEFT JOIN escuelas ON escuelas.Escuela_ID = empresas.Escuela_ID WHERE empresas.Asesor_ID=? order by empresas.Empresa_nombre";
+	$query = "SELECT grupos.Grupo_ID, grupos.Grupo_nombre, grupos.Proyecto_ID, grupos.Grupo_estatus, grupos.Escuela_ID, escuelas.Escuela_nombre FROM asesores_x_grupo LEFT JOIN escuelas ON escuelas.Escuela_ID = grupos.Escuela_ID LEFT JOIN grupos ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID WHERE asesores_x_grupo.Asesor_ID=? order by grupos.Grupo_nombre";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->bind_param("i", $Asesor_ID);
 		$stmt->execute();
-		$stmt->bind_result($Empresa_ID, $Empresa_nombre, $Empresa_producto, $Empresa_estatus, $Escuela_ID, $Escuela_nombre);
+		$stmt->bind_result($Grupo_ID, $Grupo_nombre, $Proyecto_ID, $Grupo_estatus, $Escuela_ID, $Escuela_nombre);
 
 		$tabla = "
 			<table id='empresas_juveniles_table' class='table table-hover dt-responsive nowrap' style='width:100%'>
@@ -29,18 +29,18 @@ if(
 
 		while ($stmt->fetch()) {
 			/*
-			if ($Empresa_estatus == "Activa") {
+			if ($Grupo_estatus == "Activa") {
 				$estatus = 1;
-			} else if ($Empresa_estatus == "Inactiva") {
+			} else if ($Grupo_estatus == "Inactiva") {
 				$estatus = 2;
-			} else if ($Empresa_estatus == "Cancelada") {
+			} else if ($Grupo_estatus == "Cancelada") {
 				$estatus = 0;
 			}*/
 
 			$Datos_Alumnos = "<br>";
 			$Datos_accesos = "<br>";
 			include_once('../../scripts/conexion2.php');
-			$resultado = mysqli_query($con2, "SELECT alumnos.Alumno_ID, alumnos.Alumno_nombre, alumnos.Alumno_ap_paterno, alumnos.Alumno_ap_materno, alumnos.Puesto_ID, alumnos.Alumno_estatus, puestos.Puesto_nombre, usuarios.Num_accesos, usuarios.UltimoAcceso FROM alumnos INNER JOIN usuarios ON alumnos.User_ID=usuarios.User_ID LEFT JOIN puestos ON puestos.Puesto_ID = alumnos.Puesto_ID WHERE Empresa_ID=$Empresa_ID order by alumnos.Puesto_ID");
+			$resultado = mysqli_query($con2, "SELECT alumnos.Alumno_ID, alumnos.Alumno_nombre, alumnos.Alumno_ap_paterno, alumnos.Alumno_ap_materno, alumnos.Puesto_ID, alumnos.Alumno_estatus, puestos.Puesto_nombre, usuarios.Num_accesos, usuarios.UltimoAcceso FROM alumnos INNER JOIN usuarios ON alumnos.User_ID=usuarios.User_ID LEFT JOIN puestos ON puestos.Puesto_ID = alumnos.Puesto_ID WHERE Grupo_ID=$Grupo_ID order by alumnos.Puesto_ID");
 			while ($fila = mysqli_fetch_array($resultado)) {
 				$Datos_Alumnos .= $fila[1] . " " . $fila[2] . " " . $fila[3] . "  - " . $fila[6] . "<br>";
 				if ($fila[8] != "") {
@@ -51,17 +51,17 @@ if(
 			}
 
 			/*if ($estatus > 0) {
-				$acciones = "<td class='align-middle text-center'> "  . $Empresa_estatus . "
-					<a class='select_nuevo_estatus' data-target='#modalModificar' data-toggle='modal' style='cursor: pointer'><i class='fas fa-edit text-dark-gray' data-toggle='tooltip' data-placement='top' data-empresa=" . $Empresa_ID . " data-nombre='" . $Empresa_nombre . "'' data-estatus=" . $estatus . " title='Modificar estatus'></i></a>
+				$acciones = "<td class='align-middle text-center'> "  . $Grupo_estatus . "
+					<a class='select_nuevo_estatus' data-target='#modalModificar' data-toggle='modal' style='cursor: pointer'><i class='fas fa-edit text-dark-gray' data-toggle='tooltip' data-placement='top' data-empresa=" . $Grupo_ID . " data-nombre='" . $Grupo_nombre . "'' data-estatus=" . $estatus . " title='Modificar estatus'></i></a>
 				</td>";
 			} else {
 				$acciones = "<td class='align-middle text-center'></td>";
 			}*/
 
 			$tabla.="<tr>
-				<td class='align-middle'>" . $Empresa_nombre . "</td>
+				<td class='align-middle'>" . $Grupo_nombre . "</td>
 				<td class='align-middle'>" . $Escuela_nombre . "</td>
-				<td class='align-middle'>" . $Empresa_producto . "</td>
+				<td class='align-middle'>" . $Proyecto_ID . "</td>
 				<td class='align-middle no-wrap'>" . $Datos_Alumnos . "</td>
 				<td class='align-middle wrap'>" . $Datos_accesos . "</td>
 			</tr>";

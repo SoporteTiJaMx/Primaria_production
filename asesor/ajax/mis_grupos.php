@@ -9,15 +9,15 @@ if(
 	$Asesor_ID = $_SESSION['Asesor_ID'];
 	$num_empresas = $_SESSION['num_empresas'];
 
-	$query = "SELECT empresas.Empresa_ID, empresas.Empresa_nombre, empresas.Empresa_estatus, empresas.Escuela_ID, escuelas.Escuela_nombre FROM empresas LEFT JOIN escuelas ON escuelas.Escuela_ID = empresas.Escuela_ID WHERE empresas.Asesor_ID=? AND empresas.Empresa_estatus='Activa' order by empresas.Empresa_nombre";
+	$query = "SELECT asesores_x_grupo.Grupo_ID, grupos.Grupo_nombre, grupos.Grupo_estatus, grupos.Escuela_ID, escuelas.Escuela_nombre FROM asesores_x_grupo LEFT JOIN grupos ON grupos.Grupo_ID = asesores_x_grupo.Grupo_ID LEFT JOIN escuelas ON escuelas.Escuela_ID = grupos.Escuela_ID WHERE asesores_x_grupo.Asesor_ID=? AND grupos.Grupo_estatus='activo' order by grupos.Grupo_nombre";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->bind_param("i", $Asesor_ID);
 		$stmt->execute();
-		$stmt->bind_result($Empresa_ID, $Empresa_nombre, $Empresa_estatus, $Escuela_ID, $Escuela_nombre);
+		$stmt->bind_result($Grupo_ID, $Grupo_nombre, $Grupo_estatus, $Escuela_ID, $Escuela_nombre);
 
 		$select_empresa = "<option value='0'>Selecciona empresa</option>";
 		while ($stmt->fetch()) {
-			$select_empresa.="<option value=" . $Empresa_ID . ">" . $Empresa_nombre . " de " . $Escuela_nombre .  "</option>";
+			$select_empresa.="<option value=" . $Grupo_ID . ">" . $Grupo_nombre . " de " . $Escuela_nombre .  "</option>";
 		}
 		echo $select_empresa;
 

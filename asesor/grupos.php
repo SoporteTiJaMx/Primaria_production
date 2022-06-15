@@ -23,7 +23,7 @@
 	<div class="card shadow mb-5 pb-5 min-width:300px">
 		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">Grupos Actuales</div>
 		<div class="card-body">
-			<div id="empresas_juveniles"></div>
+			<div id="grupos_asignados"></div>
 		</div>
 	</div>
 
@@ -39,18 +39,18 @@
 
 		$.ajax({ //Empresas juveniles
 			data:	parametros,
-			url: '../asesor/ajax/empresas_juveniles.php',
+			url: '../asesor/ajax/grupos_asignados.php',
 			type: 'post',
 			success: function(data)
 			{
-				$('#empresas_juveniles').html(data)
-			$('#empresas_juveniles_table').DataTable( {
+				$('#grupos_asignados').html(data)
+			$('#grupos_asignados_table').DataTable( {
 				"paging": false,
 				"info": false,
 				"searching": false,
 				responsive: true,
 			} );
-			$('#empresas_juveniles_table_wrapper div.row').addClass('col-sm-12');
+			$('#grupos_asignados_table_wrapper div.row').addClass('col-sm-12');
 
 			}
 		});
