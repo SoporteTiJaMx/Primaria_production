@@ -21,9 +21,9 @@
 
 	<nav class="mx-5 my-3">
 		<div class="nav nav-tabs" id="nav-tab" role="tablist">
-			<a class="nav-item nav-link active" id="nav-empresas-tab" data-toggle="tab" href="#nav-gestion-empresas" role="tab" aria-controls="nav-gestion-empresas" aria-selected="false">Empresas operación</a>
-			<a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Empresas puntajes</a>
-			<a class="nav-item nav-link" id="nav-puntos_personal-tab" data-toggle="tab" href="#nav-gestion-puntos_personal" role="tab" aria-controls="nav-gestion-puntos_personal" aria-selected="false">Puntajes individuales</a>
+			<a class="nav-item nav-link active" id="nav-empresas-tab" data-toggle="tab" href="#nav-gestion-empresas" role="tab" aria-controls="nav-gestion-empresas" aria-selected="false">Grupos Activos</a>
+			<a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Sesiones por grupo</a>
+			<!-- <a class="nav-item nav-link" id="nav-puntos_personal-tab" data-toggle="tab" href="#nav-gestion-puntos_personal" role="tab" aria-controls="nav-gestion-puntos_personal" aria-selected="false"></a> -->
 		</div>
 	</nav>
 
@@ -31,18 +31,14 @@
 			<!-- Tab para Gestionar por empresa operaciones-->
 		<div class="tab-pane fade mb-5 show active" id="nav-gestion-empresas" role="tabpanel" aria-labelledby="nav-empresas-tab">
 			<div class="card shadow mb-5 pb-5 min-width:300px">
-				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">TABLERO DE CONTROL PARA EMPRESAS JUVENILES</div>
+				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">AQUÍ PODRÁS ACTIVAR LAS SESIONES DE TUS GRUPOS</div>
 				<div class="card-body">
-					<p align='justify'>Este Tablero de Control ayudará en la gestión y el seguimiento de las empresas juveniles que asesoras.</p>
-					<div class="mx-5">
-						Se ofrecen dos filtros:<br><br>
-						Filtro <strong>"Todas las Empresas"</strong> en el que se puede ver la información comparada de las actividades de todas las empresas que asesoras, así como sesión por sesión.<br><br>
-						Filtro <strong>"[Nombre de la Empresa]"</strong> donde se muestra la actividad personal de cada integrante, así como sus avances en cada sesión seleccionada.<br><br>
-					</div>
+					<p class="text-justify">Este Tablero de Control ayudará en la gestión de las sesiones de los grupos a tu cargo.</p>
+					
 					<div class="form-row pb-1">
 						<div class="form-group col-1"></div>
 						<div class="form-group row col-8">
-							<label for="select_empresa" class="col-sm-3 col-form-label text-right">Empresa:</label>
+							<label for="select_empresa" class="col-sm-3 col-form-label text-right">Grupo:</label>
 							<div class="col-sm-9">
 							<select name="select_empresa" type="text" id="select_empresa" class="form-control rounded" onChange="filtro_empresa()">
 							</select>
@@ -50,7 +46,7 @@
 						</div>
 						<div class="form-group col-1"></div>
 					</div>
-					<div class="form-row pb-1">
+					<!-- <div class="form-row pb-1">
 						<div class="form-group col-1"></div>
 						<div class="form-group row col-8">
 							<label for="select_sesion" class="col-sm-3 col-form-label text-right">Sesión:</label>
@@ -60,8 +56,8 @@
 							</div>
 						</div>
 						<div class="form-group col-1"></div>
-					</div>
-					<div id="tabla"></div>
+					</div> -->
+					<div id="tabla1"></div>
 				</div>
 			</div>
 		</div>
@@ -70,7 +66,7 @@
 			<div class="card shadow mb-5 pb-5 min-width:300px">
 				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">PUNTOS OBTENIDOS POR EMPRESAS JUVENILES</div>
 				<div class="card-body">
-					<div id="tabla3"></div>
+					<div id="tabla31"></div>
 				</div>
 			</div>
 		</div>
@@ -91,7 +87,7 @@
 						</div>
 						<div class="form-group col-1"></div>
 					</div>
-					<div id="tabla2"></div>
+					<div id="tabla21"></div>
 				</div>
 			</div>
 		</div>
