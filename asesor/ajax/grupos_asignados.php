@@ -8,7 +8,7 @@ if(
 
 	$Asesor_ID = $_POST['Asesor_ID'];
 
-	$query = "SELECT grupos.Grupo_ID, grupos.Grupo_nombre, grupos.Proyecto_ID, grupos.Grupo_estatus, grupos.Escuela_ID, escuelas.Escuela_nombre FROM asesores_x_grupo LEFT JOIN escuelas ON escuelas.Escuela_ID = grupos.Escuela_ID LEFT JOIN grupos ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID WHERE asesores_x_grupo.Asesor_ID=? order by grupos.Grupo_nombre";
+	$query = "SELECT grupos.Grupo_ID, grupos.Grupo_nombre, grupos.Proyecto_ID, grupos.Grupo_estatus, grupos.Escuela_ID, escuelas.Escuela_nombre FROM asesores_x_grupo LEFT JOIN grupos ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID LEFT JOIN escuelas ON escuelas.Escuela_ID = grupos.Escuela_ID WHERE asesores_x_grupo.Asesor_ID=? order by grupos.Grupo_nombre";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->bind_param("i", $Asesor_ID);
 		$stmt->execute();
@@ -41,11 +41,11 @@ if(
 			include_once('../../scripts/conexion2.php');
 			$resultado = mysqli_query($con2, "SELECT alumnos.Alumno_ID, alumnos.Alumno_nombre, alumnos.Alumno_ap_paterno, alumnos.Alumno_ap_materno, alumnos.Alumno_estatus, usuarios.Num_accesos, usuarios.UltimoAcceso FROM alumnos INNER JOIN usuarios ON alumnos.User_ID=usuarios.User_ID WHERE Grupo_ID=$Grupo_ID order by alumnos.Alumno_nombre");
 			while ($fila = mysqli_fetch_array($resultado)) {
-				$Datos_Alumnos .= $fila[1] . " " . $fila[2] . " " . $fila[3] . "  - " . $fila[6] . "<br>";
+				$Datos_Alumnos .= $fila[1] . " " . $fila[2] . " " . $fila[3] . "<br>";
 				if ($fila[8] != "") {
-					$Datos_accesos .= $fila[7] . " / " . $fila[8] . "<br>";
+					$Datos_accesos .= $fila[5] . " / " . $fila[6] . "<br>";
 				} else {
-					$Datos_accesos .= $fila[7] . " / Sin acceso aún<br>";
+					$Datos_accesos .= $fila[6] . " / Sin acceso aún<br>";
 				}
 			}
 

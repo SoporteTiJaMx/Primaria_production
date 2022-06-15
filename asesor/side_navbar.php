@@ -42,7 +42,7 @@
 	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0">Gestión</p>
 	<ul class="nav flex-column mb-0">
 		<li class="nav-item <?php	if ($seccion == 'empresas') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>asesor/empresas.php" class="nav-link text-white ml-3">
+			<a href="<?php echo $RAIZ_SITIO; ?>asesor/grupos.php" class="nav-link text-white ml-3">
 				<i class="fas fa-industry fa-fw mr-3"></i>Mis Grupos
 			</a>
 		</li>
