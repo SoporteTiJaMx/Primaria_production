@@ -9,8 +9,10 @@ if(
 	$Centro_ID = $_POST['Centro_ID'];
 	$Licencia_ID = $_POST['Licencia_ID'];
 
-	$query = "SELECT empresas.Empresa_ID, empresas.Empresa_nombre, empresas.Empresa_producto, empresas.Empresa_estatus, escuelas.Escuela_nombre, empresas.Asesor_ID FROM empresas LEFT JOIN escuelas ON escuelas.Escuela_ID = empresas.Escuela_ID LEFT JOIN asesores ON asesores.Asesor_ID = empresas.Asesor_ID WHERE empresas.Empresa_ID IN (SELECT Empresa_ID FROM licencia_empresa WHERE Licencia_ID=?) order by Empresa_nombre";
-		$query_asesores = "SELECT Asesor_ID, Asesor_nombre, Asesor_ap_paterno FROM asesores WHERE Centro_ID=? AND Asesor_estatus<'2' order by Asesor_nombre";
+	$query = "SELECT asesores.Asesor_ID, asesores.Asesor_nombre, asesores.Asesor_ap_paterno FROM asesores WHERE asesores.Asesor_estatus < 2 AND asesores.Centro_ID = ".$Centro_ID."";
+	//$query = "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre  FROM LEFT JOIN WHERE";
+	//$query = "SELECT empresas.Empresa_ID, empresas.Empresa_nombre, empresas.Empresa_producto, empresas.Empresa_estatus, escuelas.Escuela_nombre, empresas.Asesor_ID FROM empresas LEFT JOIN escuelas ON escuelas.Escuela_ID = empresas.Escuela_ID LEFT JOIN asesores ON asesores.Asesor_ID = empresas.Asesor_ID WHERE empresas.Empresa_ID IN (SELECT Empresa_ID FROM licencia_empresa WHERE Licencia_ID=?) order by Empresa_nombre";
+	$query_grupos = "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre FROM grupos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = grupos.Proyecto_ID WHERE Centro_ID=? AND grupos.Grupo_estatus = 'activo' ORDER BY grupos.Grupo_nombre";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->bind_param("i", $Licencia_ID);
 		$stmt->execute();

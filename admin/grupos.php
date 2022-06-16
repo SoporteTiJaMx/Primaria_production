@@ -9,9 +9,11 @@
   if ($_SESSION["tipo"] != "Admin") {
     header('Location: ../error.php');
   } else {
-	$stmt=$con->prepare("SELECT Proyecto_ID, Proyecto_nombre, Proyecto_estatus FROM proyectos WHERE Proyecto_estatus= 'activo' ORDER BY Proyecto_nombre");
+	$centro_ID = $_SESSION["centro_ID"];
+	$stmt=$con->prepare("SELECT centro_proyecto.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = proyectos.Proyecto_ID WHERE Proyecto_estatus='activo' AND centro_proyecto.Centro_ID = ? ORDER BY Proyecto_nombre");
+	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
-	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre, $Proyecto_estatus);
+	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre);
 	$select_proyectos = "<select name='select_proyectos' type='text' id='select_proyectos' class='form-control rounded' onchange='validar_proyectos();'>";
 	$select_proyectos2 = "<select name='select_proyectos2' type='text' id='select_proyectos2' class='form-control rounded'>";
 	$select_proyectos.= "<option value='0'>Selecciona proyecto</option>";
@@ -22,6 +24,30 @@
 	}
 	$select_proyectos.="</select>";
 	$select_proyectos2.="</select>";
+	$stmt->close();
+
+	$stmt2=$con->prepare("SELECT Escuela_ID, Escuela_nombre FROM escuelas WHERE Escuela_estatus= 'Activa' AND Centro_ID = ? ORDER BY Escuela_nombre");
+	$stmt2->bind_param("i", $centro_ID);
+	$stmt2->execute();
+	$stmt2->bind_result($Escuela_ID, $Escuela_nombre);
+	$options = "";
+	while($stmt2->fetch()){
+		$options .= '
+			<option value="'.$Escuela_ID.'" class="">'.$Escuela_nombre.'</option>
+		';
+	}
+	$select_escuela1 ='
+		<select name="select_escuela1" id="select_escuela1" class="form-control" required>
+			<option value="0">Selecciona Escuela</option>
+			'.$options.'
+		</select>
+	';
+	$select_escuela2 ='
+		<select name="select_escuela2" id="select_escuela2" class="form-control" required>
+			<option value="0">Selecciona Escuela</option>
+			'.$options.'
+		</select>
+	';
 
 	$_SESSION["token"] = md5(uniqid(mt_rand(), true));
 ?>
@@ -36,10 +62,10 @@
 <nav class="mx-5 pt-2">
 	<div class="text-right">Estás logeado como: <strong><?php echo $_SESSION["nombre"];?></strong></div>
 	<br>
-	<div class="nav nav-pills" id="nav-tab" role="tablist">
+	<div class="nav nav-tabs" id="nav-tab" role="tablist">
 		<a class="nav-item nav-link active" id="nav-crear-tab" data-toggle="tab" href="#nav-crear" role="tab" aria-controls="nav-crear" aria-selected="true">Crear Grupos</a>
 		<a class="nav-item nav-link" id="nav-gestion-tab" data-toggle="tab" href="#nav-gestion" role="tab" aria-controls="nav-gestion" aria-selected="false">Gestionar Grupos</a>
-		<a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar voluntario a grupo</a>
+		<!-- <a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar voluntario a grupo</a> -->
 	</div>
 </nav>
 <div class="tab-content mx-5 pt-2 pb-5" id="nav-tabContent" >
@@ -55,11 +81,14 @@
 					<h5 class="text-center pb-3">Carga Manual de Grupos</h5>
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-dark rounded mx-auto"></div></div>
 					<div class="row pb-3">
-						<div class="col-3"></div>
-						<div class="col-6">
+						<div class="col-12 offset-lg-3 col-lg-6">
 							<?php echo $select_proyectos; ?>
 						</div>
-						<div class="col-3"></div>
+					</div>
+					<div class="row pb-3">
+						<div class="col-12 offset-lg-3 col-lg-6">
+							<?php echo $select_escuela1; ?>
+						</div>
 					</div>
 
 					<div class="form-row pb-1">
@@ -102,11 +131,14 @@
 						<div class="col-3"></div>
 					</div>
 					<div class="row pb-3">
-						<div class="col-3"></div>
-						<div class="col-6">
+						<div class="col-12 offset-lg-3 col-lg-6">
 							<?php echo $select_proyectos2; ?>
 						</div>
-						<div class="col-3"></div>
+					</div>
+					<div class="row pb-3">
+						<div class="col-12 offset-lg-3 col-lg-6">
+							<?php echo $select_escuela2; ?>
+						</div>
 					</div>
 					<div class="col-12 text-center">
 						<div class="col-3"></div>

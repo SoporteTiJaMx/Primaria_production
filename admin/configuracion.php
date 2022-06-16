@@ -19,50 +19,31 @@
 
 <h5 class="text-center text-dark_gray pt-3 pb-1">Configura a los distintos participantes del ciclo<?php if (isset($_SESSION['nombre_licencia'])) { echo " " . $_SESSION['nombre_licencia']; } ?>.</h5>
 
-<nav class="mx-5 my-3">
+<!-- <nav class="mx-5 my-3">
 	<div class="nav nav-tabs" id="nav-tab" role="tablist">
-		<a class="nav-item nav-link active" id="nav-patroc-tab" data-toggle="tab" href="#nav-patroc" role="tab" aria-controls="nav-patroc" aria-selected="true">Patrocinadores</a>
 		<a class="nav-item nav-link" id="nav-escuelas-tab" data-toggle="tab" href="#nav-escuelas" role="tab" aria-controls="nav-escuelas" aria-selected="false">Escuelas</a>
-		<a class="nav-item nav-link" id="nav-empresas-tab" data-toggle="tab" href="#nav-empresas" role="tab" aria-controls="nav-empresas" aria-selected="false"> Empresas juveniles </a>
-		<a class="nav-item nav-link" id="nav-asesores-tab" data-toggle="tab" href="#nav-asesores" role="tab" aria-controls="nav-asesores" aria-selected="false"> Empresa - Asesor </a>
+		<a class="nav-item nav-link" id="nav-grupos-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="nav-grupos" aria-selected="false"> Grupos </a>
+		<a class="nav-item nav-link active" id="nav-asesores-tab" data-toggle="tab" href="#nav-asesores" role="tab" aria-controls="nav-asesores" aria-selected="true"> Asesor - Grupo </a>
 		<a class="nav-item nav-link" id="nav-ajustes-tab" data-toggle="tab" href="#nav-ajustes" role="tab" aria-controls="nav-ajustes" aria-selected="false"> Variables </a>
 	</div>
-</nav>
+</nav> -->
 <?php if (isset($_SESSION["licencia_activa"])) { ?>
-	<div class="tab-content mx-5 px-3 mb-5" id="nav-tabContent" >
-		<!-- Tab para asociación patrocinadores -->
-		<div class="tab-pane fade show active" id="nav-patroc" role="tabpanel" aria-labelledby="nav-patroc-tab">
-			<h6 class="text-center text-dark_gray pt-1 pb-1">Asocia a los patrocinadores que forman parte de este ciclo (licencia).</h6>
-			<div class="row col-sm-12">
-				<div class="col-sm-6">
-					<div class="card shadow">
-						<div class="card-header text-center text-dark-gray text-spaced-3">Patrocinadores disponibles (activos)</div>
-						<div class="card-body">
-							<p class="card-text pb-2">Se muestran los patrocinadores activos no asociados con el ciclo.</p>
-							<div id="patroc_disponibles"></div>
-							<div class="row pb-1 pt-2">
-								<div class="col text-center">
-									<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="asociar_patroc('Si')">Asociar patrocinadores seleccionados</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="card shadow">
-						<div class="card-header text-center text-dark-gray text-spaced-3">Patrocinadores participantes del ciclo</div>
-						<div class="card-body">
-							<p class="card-text pb-2">Deselecciona los patrocinadores que no participan más del ciclo.</p>
-							<div id="patroc_asociados"></div>
-							<div class="row pb-1 pt-2">
-								<div class="col text-center">
-									<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="asociar_patroc('No')">Dejar de asociar patrocinadores</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<h6 class="text-center text-dark_gray pt-1 pb-1">Gestiona las empresas juveniles registradas y asocia al asesor que le corresponde.</h6>
+	<div class="card shadow mb-5 pb-5 min-width:300px">
+		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">ADMINISTRAR EMPRESAS JUVENILES</div>
+		<div class="card-body">
+		<div id="empresas_juveniles"></div>
+		<div class="row pb-1 pt-2">
+			<div class="col text-center">
+				<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="guardar_asesor_por_empresa()">Guardar Asesores por Grupo</button>
 			</div>
+		</div>
+		</div>
+	</div>
+	<div class="tab-content mx-5 px-3 mb-5" id="nav-tabContent" >
+		<!-- Tab para asesor - grupo -->
+		<div class="tab-pane fade mb-5" id="nav-asesores" role="tabpanel" aria-labelledby="nav-asesores-tab">
+			
 		</div>
 		<!-- Tab para asociación escuelas -->
 		<div class="tab-pane fade mb-5" id="nav-escuelas" role="tabpanel" aria-labelledby="nav-escuelas-tab">
@@ -99,7 +80,7 @@
 			</div>
 		</div>
 		<!-- Tab para empresas juveniles -->
-		<div class="tab-pane fade mb-5" id="nav-empresas" role="tabpanel" aria-labelledby="nav-empresas-tab">
+		<div class="tab-pane fade mb-5" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
 			<h6 class="text-center text-dark_gray pt-1 pb-1">Asigna el número de empresas juveniles a cada escuela participante.</h6>
 			<div class="row col-sm-12">
 				<div class="col-sm-6">
@@ -189,21 +170,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- Tab para empresa - asesor -->
-		<div class="tab-pane fade mb-5" id="nav-asesores" role="tabpanel" aria-labelledby="nav-asesores-tab">
-			<h6 class="text-center text-dark_gray pt-1 pb-1">Gestiona las empresas juveniles registradas y asocia al asesor que le corresponde.</h6>
-			<div class="card shadow mb-5 pb-5 min-width:300px">
-				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">ADMINISTRAR EMPRESAS JUVENILES</div>
-				<div class="card-body">
-				<div id="empresas_juveniles"></div>
-				<div class="row pb-1 pt-2">
-					<div class="col text-center">
-						<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="guardar_asesor_por_empresa()">Guardar Asesores por Empresa</button>
-					</div>
-				</div>
-				</div>
-			</div>
-		</div>
+		
 		<!-- Tab para ajustes -->
 		<div class="tab-pane fade mb-5" id="nav-ajustes" role="tabpanel" aria-labelledby="nav-ajustes-tab">
 			<h6 class="text-center text-dark_gray pt-1 pb-1">Configura las diversas variables del ciclo operativo.</h6>

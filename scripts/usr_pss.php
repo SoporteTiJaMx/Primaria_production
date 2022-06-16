@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 	if (isset($_POST["csrf"]) /* == $_SESSION["token"] */) {
 		$query = "UPDATE usuarios SET Usuario=?, Contrasena=?, Temp_usr_pss=?, Temp_pss=? WHERE User_ID=?";
-		echo $query;
+		//echo $query;
 		if ($stmt = $con->prepare($query)) {
 			//echo $stmt;
 			$pass_hash = password_hash($pass, PASSWORD_DEFAULT);

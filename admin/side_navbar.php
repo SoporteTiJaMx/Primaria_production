@@ -85,21 +85,6 @@
 				<i class="fas fa-cog fa-fw mr-3"></i>Configuración
 			</a>
 		</li>
-		<li class="nav-item <?php	if ($seccion == 'calendario') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/calendario.php" class="nav-link text-white ml-3">
-				<i class="fas fa-calendar-alt fa-fw mr-3"></i>Calendario
-			</a>
-		</li><?php /*
-		<li class="nav-item <?php	if ($seccion == 'accesos_rapidos') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/accesos_rapidos.php" class="nav-link text-white ml-3">
-				<i class="fas fa-sign-in-alt fa-fw mr-3"></i>Accesos Rápidos
-			</a>
-		</li> */ ?>
-		<li class="nav-item <?php	if ($seccion == 'tablero_control') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/tablero_control.php" class="nav-link text-white ml-3">
-				<i class="fas fa-digital-tachograph fa-fw mr-3"></i>Tablero de Control
-			</a>
-		</li>
 		<li class="nav-item <?php	if ($seccion == 'avisos') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>admin/avisos.php" class="nav-link text-white ml-3">
 				<i class="fas fa-exclamation-triangle fa-fw mr-3"></i>Avisos

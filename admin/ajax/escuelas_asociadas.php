@@ -9,6 +9,7 @@ if(
 	$Licencia_ID = $_POST['Licencia_ID'];
 
 	$query = "SELECT DISTINCT licencia_escuela.ID_licencia_escuela, licencia_escuela.Licencia_ID, licencia_escuela.Escuela_ID, escuelas.Escuela_nombre, (SELECT COUNT(Empresa_estatus) FROM empresas WHERE Empresa_estatus != 'Cancelada' AND Escuela_ID = licencia_escuela.Escuela_ID) AS Utilizadas FROM licencia_escuela LEFT JOIN escuelas ON licencia_escuela.Escuela_ID = escuelas.Escuela_ID LEFT JOIN licencia_empresa ON licencia_empresa.Escuela_ID = escuelas.Escuela_ID WHERE licencia_escuela.Licencia_ID=?";
+	$query = "SELECT DISTINCT licencia_escuela.Licencia_ID, licencia_escuela.Escuela_ID,";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->bind_param("i", $Licencia_ID);
 		$stmt->execute();

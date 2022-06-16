@@ -8,7 +8,9 @@
   if ($_SESSION["tipo"] != "Admin") {
     header('Location: ../error.php');
   } else {
-	$stmt=$con->prepare("SELECT Proyecto_ID, Proyecto_nombre FROM proyectos WHERE Proyecto_estatus='activo' ORDER BY Proyecto_nombre");
+	$centro_ID = $_SESSION["centro_ID"];
+	$stmt=$con->prepare("SELECT centro_proyecto.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = proyectos.Proyecto_ID WHERE Proyecto_estatus='activo' AND centro_proyecto.Centro_ID = ? ORDER BY Proyecto_nombre");
+	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
 	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre);
 	$select_proyectos = "<select name='select_proyectos' type='text' id='select_proyectos' class='form-control rounded' onchange='validar_proyecto();'>";
