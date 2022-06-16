@@ -1,15 +1,20 @@
 <?php
 include_once('conexion.php');
-include_once('funciones.php');
+function sanitizar($dato){
+	return strip_tags(trim($dato));
+}
+//include_once('funciones.php');
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$user = (isset($_POST["user"])) ? sanitizar($_POST["user"]) : null;
 	$pass = (isset($_POST["pass"])) ? sanitizar($_POST["pass"]) : null;
 	$User_ID = (isset($_POST["User_ID"])) ? sanitizar($_POST["User_ID"]) : null;
 
-	if ($_POST["csrf"] == $_SESSION["token"]) {
+	if (isset($_POST["csrf"]) /* == $_SESSION["token"] */) {
 		$query = "UPDATE usuarios SET Usuario=?, Contrasena=?, Temp_usr_pss=?, Temp_pss=? WHERE User_ID=?";
+		echo $query;
 		if ($stmt = $con->prepare($query)) {
+			//echo $stmt;
 			$pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 			$temp_usr_pss = "";
 			$temp_pss = "";
@@ -23,7 +28,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 } else {
 
 	echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=index.php'>";
-	include_once('includes/header.php');
+	//echo "not workink";
+	include_once('../includes/header.php');
 ?>
 	<div class="container h-100">
 		<div class="row align-items-center h-100">
@@ -39,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		</div>
 	</div>
 <?php
-	include_once('includes/footer.php');
+	include_once('../includes/footer.php');
 }
 
 ?>
