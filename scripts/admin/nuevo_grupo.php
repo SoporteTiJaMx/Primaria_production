@@ -11,6 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	if (isset($_POST["csrf"]) && $_POST["csrf"] == $_SESSION["token"]) {
 		$Proyecto_ID = $_POST["select_proyectos"];
 		$Escuela_ID = $_POST["select_escuela1"];
+		$Licencia_ID = $_SESSION["licencia_activa"];
 		$Grupo_nombre = (isset($_POST["name"])) ? sanitizar($_POST["name"]) : null;
 
 		$stmt3 = $con->prepare("SELECT * FROM grupos WHERE Grupo_nombre = ?");
@@ -23,6 +24,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$stmt->bind_param("iiss", $Escuela_ID, $Proyecto_ID, $Grupo_nombre, $Grupo_estatus);
 
 			if ($stmt->execute()) {
+				$stmt_id=$con->prepare("SELECT Grupo_ID FROM grupos WHERE Grupo_nombre = ?");
+				$stmt_id -> bind_param("s", $Grupo_nombre);
+				$stmt_id -> execute();
+				$stmt_id -> bind_result($id);
+				$stmt_id->fetch();
+				$stmt_id -> close();
+				$stmt->close();
+				$stmt_licencia = $con->prepare("INSERT INTO licencia_grupo (Licencia_ID, Grupo_ID, Escuela_ID) VALUES (?, ?, ?)");
+				$stmt_licencia->bind_param("iii", $Licencia_ID, $id, $Escuela_ID);
+				$stmt_licencia->execute();
+				$stmt_licencia->close();
 				echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=../../admin/grupos.php'>";
 				include_once('../../includes/header.php');
 				?>

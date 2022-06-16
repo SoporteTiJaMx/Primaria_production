@@ -28,16 +28,23 @@
 	</div>
 </nav> -->
 <?php if (isset($_SESSION["licencia_activa"])) { ?>
-	<h6 class="text-center text-dark_gray pt-1 pb-1">Gestiona las empresas juveniles registradas y asocia al asesor que le corresponde.</h6>
+	<h6 class="text-center text-dark_gray pt-1 pb-1">Gestiona a los asesores, asignándoles un grupo.</h6>
 	<div class="card shadow mb-5 pb-5 min-width:300px">
-		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">ADMINISTRAR EMPRESAS JUVENILES</div>
+		<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">ASIGANR ASESORES A GRUPO</div>
 		<div class="card-body">
-		<div id="empresas_juveniles"></div>
-		<div class="row pb-1 pt-2">
-			<div class="col text-center">
-				<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="guardar_asesor_por_empresa()">Guardar Asesores por Grupo</button>
-			</div>
-		</div>
+			<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/asignar_asesores.php" method="post" class="my-4 needs-validation" novalidate>
+				<input name="csrf2" type="hidden" id="csrf2" value="<?php echo $_SESSION['token']; ?>">
+
+				<div class="tabla-asignar" id="asignar_asesores"></div>
+
+				<div class="row pb-1">
+					<div class="col text-center">
+						<?php if ($_SESSION['tipo'] == "Admin") {?>
+							<button type="submit" class="btn btn-warning text-center px-5 my-2" name="btn_asignar" id="btn_asignar" >Asignar</button>
+						<?php } ?>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div class="tab-content mx-5 px-3 mb-5" id="nav-tabContent" >
@@ -352,18 +359,18 @@
 
 		$.ajax({ //Empresas juveniles registradas
 		  data:  parametros,
-		  url: '../admin/ajax/empresas_juveniles.php',
+		  url: '../admin/ajax/info_asesores_grupos.php',
 		  type: 'post',
 		  success: function(data)
 		  {
-		  	$('#empresas_juveniles').html(data)
-			$('#empresas_juveniles_table').DataTable( {
+		  	$('#asignar_asesores').html(data)
+			$('#asignar_asesores_table').DataTable( {
 				"paging": false,
 				"info": false,
 				"pageLength": 100,
 				"scrollX": true,
 			} );
-			$('#empresas_juveniles_table_wrapper div.row').addClass('col-sm-12');
+			$('#asignar_asesores_table_wrapper div.row').addClass('col-sm-12');
 
 			$('[data-toggle="tooltip"]').tooltip();
 

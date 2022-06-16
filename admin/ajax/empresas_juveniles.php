@@ -8,42 +8,30 @@ if(
 
 	$Centro_ID = $_POST['Centro_ID'];
 	$Licencia_ID = $_POST['Licencia_ID'];
+	$estatus = "activo";
 
-	$query = "SELECT asesores.Asesor_ID, asesores.Asesor_nombre, asesores.Asesor_ap_paterno FROM asesores WHERE asesores.Asesor_estatus < 2 AND asesores.Centro_ID = ".$Centro_ID."";
-	//$query = "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre  FROM LEFT JOIN WHERE";
-	//$query = "SELECT empresas.Empresa_ID, empresas.Empresa_nombre, empresas.Empresa_producto, empresas.Empresa_estatus, escuelas.Escuela_nombre, empresas.Asesor_ID FROM empresas LEFT JOIN escuelas ON escuelas.Escuela_ID = empresas.Escuela_ID LEFT JOIN asesores ON asesores.Asesor_ID = empresas.Asesor_ID WHERE empresas.Empresa_ID IN (SELECT Empresa_ID FROM licencia_empresa WHERE Licencia_ID=?) order by Empresa_nombre";
-	$query_grupos = "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre FROM grupos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = grupos.Proyecto_ID WHERE Centro_ID=? AND grupos.Grupo_estatus = 'activo' ORDER BY grupos.Grupo_nombre";
+	$query = "SELECT asesores.Asesor_ID, asesores.Asesor_nombre, asesores.Asesor_ap_paterno FROM asesores WHERE asesores.Asesor_estatus < 2 AND asesores.Centro_ID = ?";
+	//$query_grupos = "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre FROM grupos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = grupos.Proyecto_ID LEFT JOIN licencia_grupo ON licencia_grupo.Grupo_ID = grupos.Grupo_ID WHERE Centro_ID=? AND Licencia_ID = ? AND grupos.Grupo_estatus = ? ORDER BY grupos.Grupo_nombre";
 	if ($stmt = $con->prepare($query)) {
-		$stmt->bind_param("i", $Licencia_ID);
+		$stmt->bind_param("i", $Centro_ID);
 		$stmt->execute();
-		$stmt->bind_result($Empresa_ID, $Empresa_nombre, $Empresa_producto, $Empresa_estatus, $Escuela_nombre, $Asesor_ID);
+		$stmt->bind_result($Asesor_ID, $Asesor_nombre, $Asesor_ap_paterno);
 
 		$tabla = "
 			<table id='empresas_juveniles_table' class='table table-hover' style='width:100%'>
 		        <thead>
 		            <tr>
-		                <th>Acciones</th>
-		                <th>Empresa</th>
-		                <th>Escuela</th>
-		                <th>Producto</th>
+		                <th>Asesor ID</th>
 		                <th>Asesor</th>
-		                <th>Estatus</th>
+		                <th>Grupo Asignado</th>
 		            </tr>
 		        </thead>
 		        <tbody>";
 
 		while ($stmt->fetch()) {
-			if ($Empresa_estatus == "Activa") {
-				$estatus = 1;
-			} else if ($Empresa_estatus == "Inactiva") {
-				$estatus = 2;
-			} else if ($Empresa_estatus == "Cancelada") {
-				$estatus = 0;
-			}
-
 			include_once('../../scripts/conexion2.php');
-			$resultado = mysqli_query($con2, "SELECT Asesor_ID, Asesor_nombre, Asesor_ap_paterno FROM asesores WHERE Centro_ID=$Centro_ID AND Asesor_estatus<'2' order by Asesor_nombre");
-			$select_asesores = "<select name='asesor_" . $Empresa_ID . "' type='text' id='asesor_" . $Empresa_ID . "' class='form-control rounded select_asesores'>";
+			$resultado = mysqli_query($con2, "SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre FROM grupos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = grupos.Proyecto_ID LEFT JOIN licencia_grupo ON licencia_grupo.Grupo_ID = grupos.Grupo_ID WHERE Centro_ID=$Centro_ID AND Licencia_ID = $Licencia_ID AND grupos.Grupo_estatus = 'activo' ORDER BY grupos.Grupo_nombre");
+			$select_asesores = "<select name='asesor_" . $Asesor_ID . "' type='text' id='asesor_" . $Asesor_ID . "' class='form-control rounded select_asesores'>";
 			$select_asesores.= "<option value='0'>Selecciona asesor</option>";
 			while ($fila = mysqli_fetch_array($resultado)) {
 				if ($fila[0] == $Asesor_ID) {

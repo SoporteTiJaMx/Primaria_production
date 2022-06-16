@@ -37,6 +37,7 @@
 		<a class="nav-item nav-link active" id="nav-proyectos-tab" data-toggle="tab" href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="true">Proyectos</a>
 		<a class="nav-item nav-link" id="nav-patrocinadores-tab" data-toggle="tab" href="#nav-patrocinadores" role="tab" aria-controls="nav-patrocinadores" aria-selected="false">Patrocinadores</a>
 		<a class="nav-item nav-link" id="nav-patrocproy-tab" data-toggle="tab" href="#nav-patrocproy" role="tab" aria-controls="nav-patrocproy" aria-selected="false">Asignar patrocinadores al proyecto</a>
+		<a class="nav-item nav-link" id="nav-proyecprog-tab" data-toggle="tab" href="#nav-proyecprog" role="tab" aria-controls="nav-proyecprog" aria-selected="false">Asignar Programa a los Proyectos</a>
 	</div>
 </nav>
 <div class="tab-content mx-5 pt-2 pb-5" id="nav-tabContent" >
@@ -179,6 +180,27 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Tab para crear un nuevo proyecto -->
+	<div class="tab-pane fade" id="nav-proyecprog" role="tabpanel" aria-labelledby="nav-proyecprog-tab">
+		<div class="card shadow min-width:300px">
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Asociar Proyectos a Programas</div>
+			<div class="card-body">
+				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/asociar_proyecto_programa.php" method="post" class="mt-1">
+					<input name="csrf4" type="hidden" id="csrf4" value="<?php echo $_SESSION['token']; ?>">
+					<input name="centro_ID4" type="hidden" id="centro_ID4" value="<?php echo $_SESSION['centro_ID']; ?>">
+					<div id="proyecto_programa"></div>
+					<div class="row pb-1">
+						<div class="col text-center">
+							<?php if ($_SESSION['tipo'] == "Admin") {?>
+								<button type="submit" class="btn btn-warning text-center px-5 my-2" name="btn_asignar" id="btn_asignar" >Asignar</button>
+							<?php } ?>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -369,6 +391,30 @@
 					"order": [[1, "asc"]]
 				});
 				$('#patrocinadores_table_wrapper div.row').addClass('col-sm-12');
+				$('.dataTables_length').parent().addClass('d-flex justify-content-start');
+				$('.dataTables_filter').parent().addClass('d-flex justify-content-end');
+				$('ul.pagination').addClass('pagination-sm');
+
+				$('.select_nuevo_estatus2 i').click(function(){
+					$('#modalEstatus2 .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
+					$('#Patrocinador_ID_nuevo_estatus').val($(this).data('patrocinador'));
+					$('#nuevo_estatus2').val($(this).data('estatus'));
+					$('#modalEstatus2').modal('show');
+				})
+			}
+		})
+		$.ajax({ //Asociar proyectos a programas
+			url: '../scripts/admin/proyecto_programa_ver.php',
+			success: function(data)
+			{
+				$('#proyecto_programa').html(data)
+				$('#proyecto_programa_table').DataTable({
+					"pagingType": "simple",
+					"pageLength": 100,
+					"scrollX": true,
+					"order": [[1, "asc"]]
+				});
+				$('#proyecto_programa_table_wrapper div.row').addClass('col-sm-12');
 				$('.dataTables_length').parent().addClass('d-flex justify-content-start');
 				$('.dataTables_filter').parent().addClass('d-flex justify-content-end');
 				$('ul.pagination').addClass('pagination-sm');

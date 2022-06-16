@@ -33,6 +33,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$stmt_p -> bind_param("ii", $centro_ID, $id);
 			$stmt_p -> execute();
 			$stmt_p -> close();
+			$stmt_prog = $con->prepare("INSERT INTO proyecto_programa (Proyecto_ID) VALUES (?)");
+			$stmt_prog -> bind_param("i", $id);
+			$stmt_prog -> execute();
+			$stmt_prog -> close();
 			echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=../../admin/patrocinadores.php'>";
 			include_once('../../includes/header.php');
 			?>
