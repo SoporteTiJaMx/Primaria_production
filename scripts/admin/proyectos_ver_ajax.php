@@ -22,7 +22,7 @@ if(
 		</thead>
 		<tbody>";
 		while ($result=$stmt->fetch()) {
-			if ($Proyecto_estatus == "activo") {
+			if ($Proyecto_estatus == "Activo") {
 				$bckgrnd_color = "";
 				$text_i = "text-dark-gray";
 			} else {

@@ -38,7 +38,7 @@ if(
 				<tr>
 					".$acciones."
 					<td class= 'align-middle " . $bckgrnd_color . "'>".nl2br(htmlentities($Patroc_nombre))."</td>
-					<td class='d-flex justify-content-center " . $bckgrnd_color . "'><img src='../images/patrocinadores/" . $Patroc_ID . ".png' alt='Logo de " . $Patroc_nombre . "'  height='30'></td>
+					<td class='d-flex justify-content-center " . $bckgrnd_color . "'><img src='../images/patrocinadores/" . $Patroc_ID . ".jpg' alt='Logo de " . $Patroc_nombre . "'  height='30'></td>
 					<td class= 'align-middle " . $bckgrnd_color . "'>".ucwords($Patroc_estatus)."</td>
 				</tr>
 			";

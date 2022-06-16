@@ -31,7 +31,7 @@
 <nav class="mx-5 pt-2">
 	<div class="text-right">Estás logeado como: <strong><?php echo $_SESSION["nombre"];?></strong></div>
 	<br>
-	<div class="nav nav-pills" id="nav-tab" role="tablist">
+	<div class="nav nav-tabs" id="nav-tab" role="tablist">
 		<a class="nav-item nav-link active" id="nav-proyectos-tab" data-toggle="tab" href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="true">Proyectos</a>
 		<a class="nav-item nav-link" id="nav-patrocinadores-tab" data-toggle="tab" href="#nav-patrocinadores" role="tab" aria-controls="nav-patrocinadores" aria-selected="false">Patrocinadores</a>
 		<a class="nav-item nav-link" id="nav-patrocproy-tab" data-toggle="tab" href="#nav-patrocproy" role="tab" aria-controls="nav-patrocproy" aria-selected="false">Asignar patrocinadores al proyecto</a>
@@ -41,10 +41,11 @@
 	<!-- Tab para crear un nuevo proyecto -->
 	<div class="tab-pane fade show active" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
 		<div class="card shadow min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-white text-spaced-3">NUEVO PROYECTO</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">NUEVO PROYECTO</div>
 			<div class="card-body">
 				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/nuevo_proyecto.php" method="post" class="mt-1">
 					<input name="csrf" type="hidden" id="csrf" value="<?php echo $_SESSION['token']; ?>">
+					<input name="centro_ID" type="hidden" id="centro_ID" value="<?php echo $_SESSION['centro_ID']; ?>">
 
 					<h5 class="text-center pb-3">INGRESA NUEVO PROYECTO</h5>
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-white rounded mx-auto"></div></div>
@@ -70,7 +71,7 @@
 		</div>
 		<hr class="oscura">
 		<div class="card shadow mb-5 min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-white text-spaced-3" id="card-title">PROYECTOS REGISTRADOS</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">PROYECTOS REGISTRADOS</div>
 			<div class="card-body">
 				<div id="proyectos_registrados"></div>
 			</div>
@@ -80,7 +81,7 @@
 	<!-- Tab para patrocinadores -->
 	<div class="tab-pane fade mb-5" id="nav-patrocinadores" role="tabpanel" aria-labelledby="nav-patrocinadores-tab">
 		<div class="card shadow min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-white text-spaced-3">NUEVO PATROCINADOR</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">NUEVO PATROCINADOR</div>
 			<div class="card-body">
 
 				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/nuevo_patrocinador.php" method="post" class="mt-1" enctype="multipart/form-data">
@@ -124,7 +125,7 @@
 		</div>
 		<hr class="oscura">
 		<div class="card shadow mb-5 min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-white text-spaced-3" id="card-title">PAROCINADORES REGISTRADOS</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">PAROCINADORES REGISTRADOS</div>
 			<div class="card-body">
 				<div id="patrocinadores_registrados"></div>
 			</div>
@@ -134,7 +135,7 @@
 	<!-- Tab para asignación de patrocinadores a proyectos -->
 	<div class="tab-pane fade mb-5" id="nav-patrocproy" role="tabpanel" aria-labelledby="nav-patrocproy-tab">
 		<div class="card shadow mb-5 pb-5">
-			<div class="card-header text-center bg-dark-blue text-white text-spaced-3" id="card-title">ASIGNAR PATROCINADORES AL PROYECTO</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">ASIGNAR PATROCINADORES AL PROYECTO</div>
 			<div class="card-body">
 				<h6 class="text-center text-dark_gray pt-1 pb-1">Asocia a los patrocinadores que forman parte de cada proyecto. Selecciona un proyecto para iniciar.</h6>
 				<div class="row pb-3">
@@ -148,7 +149,7 @@
 				<div class="row col-sm-12">
 					<div class="col-sm-6">
 						<div class="card shadow">
-							<div class="card-header text-center bg-dark-blue text-white text-spaced-3">Patrocinadores disponibles (activos)</div>
+							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Patrocinadores disponibles (activos)</div>
 							<div class="card-body">
 								<p class="card-text pb-2">Se muestran los patrocinadores activos no asociados con el proyecto.</p>
 								<div id="patroc_disponibles"></div>
@@ -162,7 +163,7 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="card shadow">
-							<div class="card-header text-center bg-dark-blue text-white text-spaced-3">Patrocinadores participantes del proyecto</div>
+							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Patrocinadores participantes del proyecto</div>
 							<div class="card-body">
 								<p class="card-text pb-2">Deselecciona los patrocinadores que no participan más del proyecto.</p>
 								<div id="patroc_asociados"></div>
