@@ -85,7 +85,8 @@
 			<div class="card-body">
 
 				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/nuevo_patrocinador.php" method="post" class="mt-1" enctype="multipart/form-data">
-					<input name="csrf" type="hidden" id="csrf" value="<?php echo $_SESSION['token']; ?>">
+					<input name="csrf1" type="hidden" id="csrf1" value="<?php echo $_SESSION['token']; ?>">
+					<input name="centro_ID1" type="hidden" id="centro_ID1" value="<?php echo $_SESSION['centro_ID']; ?>">
 
 					<h5 class="text-center pb-3">INGRESA NUEVO PATROCINADOR</h5>
 

@@ -8,7 +8,7 @@ if(
 
 	$Proyecto_ID = $_POST['Proyecto_ID'];
 
-	$stmt=$con->prepare("SELECT patrocinadores.Patroc_nombre, patrocinadores.Patroc_estatus, patrocinadores.Patroc_ID FROM patrocinadores WHERE patrocinadores.Patroc_ID NOT IN (SELECT proyecto_patrocinador.Patroc_ID FROM proyecto_patrocinador WHERE proyecto_patrocinador.Proyecto_ID=?)");
+	$stmt=$con->prepare("SELECT patrocinadores.Patroc_nombre, patrocinadores.Patroc_estatus, patrocinadores.Patroc_ID FROM patrocinadores WHERE patrocinadores.Patroc_tipo = 'Local' AND patrocinadores.Patroc_ID NOT IN (SELECT proyecto_patrocinador.Patroc_ID FROM proyecto_patrocinador WHERE proyecto_patrocinador.Proyecto_ID=?)");
 	$stmt->bind_param('i', $Proyecto_ID);
 	$stmt->execute();
 	$stmt->bind_result($Patroc_nombre, $Patroc_estatus, $Patroc_ID);
@@ -25,8 +25,8 @@ if(
 	        <tbody>";
 
 	while ($result=$stmt->fetch()) {
-		if(is_file('../../images/patrocinadores/'. $Patroc_ID .'.png')){
-			$imagen = '../images/patrocinadores/'. $Patroc_ID .'.png';
+		if(is_file('../../images/patrocinadores/'. $Patroc_ID .'.jpg')){
+			$imagen = '../images/patrocinadores/'. $Patroc_ID .'.jpg';
 		} else {
 			$imagen = '../images/patrocinadores/perfil.png';
 		}

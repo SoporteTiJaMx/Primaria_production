@@ -7,7 +7,9 @@ if(
 	strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
 ){
 	include_once('../conexion.php');
-	$stmt=$con->prepare("SELECT Patroc_ID, Patroc_nombre, Patroc_estatus FROM patrocinadores WHERE Patroc_estatus = 'Activo' ORDER BY Patroc_nombre");
+	$centro_ID = $_SESSION["centro_ID"];
+	$stmt=$con->prepare("SELECT Patroc_ID, Patroc_nombre, Patroc_estatus FROM patrocinadores WHERE Patroc_estatus = 'Activo' AND Centro_ID = ? ORDER BY Patroc_nombre");
+	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
 	$stmt->bind_result($Patroc_ID, $Patroc_nombre, $Patroc_estatus);
 

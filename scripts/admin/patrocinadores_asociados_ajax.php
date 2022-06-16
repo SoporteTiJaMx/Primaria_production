@@ -8,7 +8,7 @@ if(
 
 	$Proyecto_ID = $_POST['Proyecto_ID'];
 
-	$stmt=$con->prepare("SELECT patrocinadores.Patroc_ID, patrocinadores.Patroc_nombre, proyectos.Proyecto_nombre FROM patrocinadores LEFT JOIN proyecto_patrocinador ON proyecto_patrocinador.Patroc_ID = patrocinadores.Patroc_ID LEFT JOIN proyectos ON proyectos.Proyecto_ID = proyecto_patrocinador.Proyecto_ID WHERE patrocinadores.Patroc_estatus='activo' AND proyecto_patrocinador.Proyecto_ID=?");
+	$stmt=$con->prepare("SELECT patrocinadores.Patroc_ID, patrocinadores.Patroc_nombre, proyectos.Proyecto_nombre FROM patrocinadores LEFT JOIN proyecto_patrocinador ON proyecto_patrocinador.Patroc_ID = patrocinadores.Patroc_ID LEFT JOIN proyectos ON proyectos.Proyecto_ID = proyecto_patrocinador.Proyecto_ID WHERE patrocinadores.Patroc_estatus='activo' AND patrocinadores.Patroc_tipo = 'Local' AND proyecto_patrocinador.Proyecto_ID=?");
 	$stmt->bind_param('i', $Proyecto_ID);
 	$stmt->execute();
 	$stmt->bind_result($Patroc_ID, $Patroc_nombre, $Proyecto_nombre);
@@ -25,8 +25,8 @@ if(
 	        <tbody>";
 
 	while ($result=$stmt->fetch()) {
-		if(is_file('../../images/patrocinadores/'. $Patroc_ID .'.png')){
-			$imagen = '../images/patrocinadores/'. $Patroc_ID .'.png';
+		if(is_file('../../images/patrocinadores/'. $Patroc_ID .'.jpg')){
+			$imagen = '../images/patrocinadores/'. $Patroc_ID .'.jpg';
 		} else {
 			$imagen = '../images/patrocinadores/perfil.png';
 		}
