@@ -34,6 +34,7 @@ if(
                     <td>
                         '.$Sesion_nombre.'
                         <input type="hidden" name="sesion_id_'.$indice.'" class="" value="'.$Sesion_ID.'">
+                        <input type="hidden" name="estatus_id_'.$indice.'" class="" value="'.$estatus.'">
                     </td>
                     <td>'.$Sesion_desc.'</td>
                     <td>
@@ -43,7 +44,7 @@ if(
                     </td>
                 </tr>
             ';
-            $inidice++;
+            $indice++;
         }
         $table = '
             <table id="Datos-filtrados" class="table table-hover">
@@ -55,6 +56,8 @@ if(
                 <tbody class="">
                     '.$sesiones_rows.'
                 </tbody>
+                <input type="hidden" name="integrantes" class="" value="'.$indice.'">
+                <input type="hidden" name="Grupo_id" class="" value="'.$Grupo_ID.'">
             </table>
         ';
     }

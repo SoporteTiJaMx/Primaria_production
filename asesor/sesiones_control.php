@@ -19,18 +19,14 @@
 	<script src="../js/Chart.js"></script>
 	<script src="../js/chartjs-plugin-labels.min.js"></script>
 
-	<nav class="mx-5 my-3">
+	<!-- <nav class="mx-5 my-3">
 		<div class="nav nav-tabs" id="nav-tab" role="tablist">
 			<a class="nav-item nav-link active" id="nav-empresas-tab" data-toggle="tab" href="#nav-gestion-empresas" role="tab" aria-controls="nav-gestion-empresas" aria-selected="false">Activar Sesiones</a>
-			<!-- <a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Sesiones por grupo</a> -->
-			<!-- <a class="nav-item nav-link" id="nav-puntos_personal-tab" data-toggle="tab" href="#nav-gestion-puntos_personal" role="tab" aria-controls="nav-gestion-puntos_personal" aria-selected="false"></a> -->
+			<a class="nav-item nav-link" id="nav-graficas_puntos-tab" data-toggle="tab" href="#nav-gestion-graficas_puntos" role="tab" aria-controls="nav-gestion-graficas_puntos" aria-selected="false">Sesiones por grupo</a>
+			<a class="nav-item nav-link" id="nav-puntos_personal-tab" data-toggle="tab" href="#nav-gestion-puntos_personal" role="tab" aria-controls="nav-gestion-puntos_personal" aria-selected="false"></a>
 		</div>
-	</nav>
-
-	<div class="tab-content mx-5 px-3 mb-5" id="nav-tabContent" >
-			<!-- Tab para Gestionar por empresa operaciones-->
-		<div class="tab-pane fade mb-5 show active" id="nav-gestion-empresas" role="tabpanel" aria-labelledby="nav-empresas-tab">
-			<div class="card shadow mb-5 pb-5 min-width:300px">
+	</nav> -->
+			<div class="card shadow mx-3 mb-5 pb-5">
 				<div class="card-header text-center text-dark-gray text-spaced-3" id="card-title">AQUÍ PODRÁS ACTIVAR LAS SESIONES DE TUS GRUPOS</div>
 				<div class="card-body">
 					<p class="text-justify">Selecciona el grupo para poder gestionar las sesiones.</p>
@@ -46,9 +42,28 @@
 						</div>
 						<div class="form-group col-1"></div>
 					</div>
-					<div id="tabla"></div>
+					<form action="<?php echo $RAIZ_SITIO; ?>scripts/asesor/activar_sesiones.php" method="post" class="my-4 needs-validation" novalidate>
+						<input name="csrf2" type="hidden" id="csrf2" value="<?php echo $_SESSION['token']; ?>">
+
+						
+						<div class="tabla-asignar" id="tabla"></div>
+					
+
+						<div class="row pb-1">
+							<div class="col text-center">
+								<?php if ($_SESSION['tipo'] == "Volun") {?>
+									<button type="submit" class="btn btn-warning text-center px-5 my-2" name="btn_asignar" id="btn_asignar" >Asignar</button>
+								<?php } ?>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
+
+	<div class="tab-content mx-5 px-3 mb-5" id="nav-tabContent" >
+			<!-- Tab para Gestionar por empresa operaciones-->
+		<div class="tab-pane fade mb-5 show active" id="nav-gestion-empresas" role="tabpanel" aria-labelledby="nav-empresas-tab">
+			
 		</div>
 			<!-- Tab para Gestionar por empresa puntajes-->
 		<div class="tab-pane fade mb-5" id="nav-gestion-graficas_puntos" role="tabpanel" aria-labelledby="nav-graficas_puntos-tab">
@@ -112,12 +127,12 @@
 				{
 					//alert(data);
 					$("#tabla").html(data)
-					$('#Datos-filtrados').DataTable( {
+					/* $('#Datos-filtrados').DataTable( {
 							"pagingType": "simple",
 							"pageLength": 100,
 							"scrollX": true,
 					} );
-					$('#Datos-filtrados_wrapper div.row').addClass('col-sm-12');
+					$('#Datos-filtrados_wrapper div.row').addClass('col-sm-12'); */
 				}
 			});
 		}
