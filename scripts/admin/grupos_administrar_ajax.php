@@ -8,9 +8,9 @@ if(
 ){
 	include_once('../conexion.php');
 	include_once('../conexion2.php');
-	$stmt=$con->prepare("SELECT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre, grupos.Grupo_estatus, proyectos.Proyecto_nombre, asesores.Asesor_nombre, asesores.Asesor_ap_paterno, asesores.Asesor_estatus, asesores_x_grupo.Asesor_ID FROM grupos LEFT JOIN proyectos ON proyectos.Proyecto_ID = grupos.Proyecto_ID LEFT JOIN asesores_x_grupo ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID LEFT JOIN asesores ON asesores.Asesor_ID = asesores_x_grupo.Asesor_ID WHERE Grupo_estatus = 'activo' ORDER BY Grupo_nombre");
+	$stmt=$con->prepare("SELECT DISTINCT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre, grupos.Grupo_estatus, proyectos.Proyecto_nombre FROM grupos LEFT JOIN proyectos ON proyectos.Proyecto_ID = grupos.Proyecto_ID LEFT JOIN asesores_x_grupo ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID WHERE Grupo_estatus = 'activo' ORDER BY Grupo_nombre");
 	$stmt->execute();
-	$stmt->bind_result($Grupo_ID, $Proyecto_ID, $Grupo_nombre, $Grupo_estatus, $Proyecto_nombre, $Asesor_nombre, $Asesor_ap, $Asesor_estatus, $Asesor_ID);
+	$stmt->bind_result($Grupo_ID, $Proyecto_ID, $Grupo_nombre, $Grupo_estatus, $Proyecto_nombre);
 
 	$tabla="<table class='table table-striped table-hover' id='grupos_table' style='width:100%'>";
 	$tabla.="
@@ -27,21 +27,22 @@ if(
 		<tbody>";
 		while ($stmt->fetch()) {
 			
-			//$voluntarios_list = "";
-			/* $stmt2=$con->prepare("SELECT asesores.Asesor_nombre, usuarios.Usuario, asesores_x_grupo.Asesor_ID, asesores_x_grupo.Grupo_ID FROM asesores left JOIN usuarios ON usuarios.User_ID=asesores.User_ID LEFT JOIN asesores_x_grupo ON asesores_x_grupo.Asesor_ID = asesores.Asesor_ID  WHERE Grupo_ID=? order by Asesor_nombre");
+			$voluntarios_list = "";
+			$stmt2=$con2->prepare("SELECT asesores.Asesor_nombre, asesores.Asesor_ap_paterno, usuarios.Usuario, asesores_x_grupo.Asesor_ID, asesores_x_grupo.Grupo_ID FROM asesores left JOIN usuarios ON usuarios.User_ID=asesores.User_ID LEFT JOIN asesores_x_grupo ON asesores_x_grupo.Asesor_ID = asesores.Asesor_ID  WHERE Grupo_ID=? order by Asesor_nombre");
 			$stmt2->bind_param('i', $Grupo_ID);
 			$stmt2->execute();
-			$stmt2->bind_result($Asesor_nombre, $Usuario, $Asesor_ID, $grupo);
+			$stmt2->bind_result($Asesor_nombre, $Asesor_ap, $Usuario, $Asesor_ID, $grupo);
 			while ($stmt2->fetch()) {
-				$voluntarios_list .= $Usuario . " - " . $Asesor_nombre .PHP_EOL;
-			} */
+				$Asesor = $Asesor_nombre." ".$Asesor_ap;
+				$voluntarios_list .= $Usuario . " - " . $Asesor .PHP_EOL;
+			}
 
 			$bckgrnd_color = "";
 			if ($Grupo_estatus == "activo") {
 				$acciones = "<td class='align-middle text-center " . $bckgrnd_color . "'>
 					<a class='select_nuevo_estatus' data-target='#modalModificar' data-toggle='modal' style='cursor: pointer'><i class='fas fa-edit text-dark-gray' data-toggle='tooltip' data-placement='top' data-grupo='" . $Grupo_ID . "' data-nombre='" . $Grupo_nombre . "' data-estatus='" . $Grupo_estatus . "' title='Modificar Estatus'></i></a>
 				</td>";
-				$voluntarios = "<td class='align-middle'>" . $Asesor_nombre . " ". $Asesor_ap ."</td>";
+				$voluntarios = "<td class='align-middle'>" . $voluntarios_list . "</td>";
 				$alumnos = mysqli_fetch_row(mysqli_query($con2, "SELECT COUNT(*) FROM alumnos WHERE Grupo_ID=" . $Grupo_ID . ""));
 				//$alumnos = 0;
 				/* $stmt3=$con->prepare("SELECT COUNT(*) AS alumnos FROM alumnos WHERE Grupo_ID=?");
