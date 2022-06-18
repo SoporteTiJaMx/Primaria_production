@@ -111,13 +111,13 @@
 				</form>
 				<hr class="oscura">
 				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/muchos_grupos.php" method="post" class="mt-1" enctype="multipart/form-data">
-					<h5 class="text-center pb-3"><?php echo strtoupper($lang["grupos_sttl_2"]); ?></h5>
+					<h5 class="text-center pb-3">Carga Masiva de Grupos</h5>
 					<div class="row pb-3">
 						<div class="col-3"></div>
 						<div class="col-6">
 							<div><?php echo $lang["grupos_inst_1"]; ?>:</div><br>
 							<div><i class="fas fa-chevron-right pr-2"></i>Primero selecciona el proyecto al que estará vinculado el grupo.</div>
-							<div><i class="fas fa-chevron-right pr-2"></i>Descarga la plantilla <a href="../docs/carga_masiva_grupos.csv" download="">AQUÍ</a> .</div>
+							<div><i class="fas fa-chevron-right pr-2"></i>Descarga la plantilla <a href="carga_masiva_grupos.csv" download>AQUÍ</a> .</div>
 							<div><i class="fas fa-chevron-right pr-2"></i>Ingresa tantas filas como grupos desees agregar (no modifiques los encabezados de columna).</div>
 							<div><i class="fas fa-chevron-right pr-2"></i>Guárdalo y súbelo. Asegúrate que sea un archivo .CSV.</div>
 						</div>
