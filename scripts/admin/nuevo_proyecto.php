@@ -45,9 +45,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<div class="col-6 mx-auto">
 						<div class="card shadow">
 							<div class="card-body">
-								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Registrado exitosamente</h5>
-								<p class="card-text">Siguen trabajando</p>
-								<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning">Continuar</a></div>
+								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Datos guardados exitosamente.</h5>
+								<p class="card-text">El proyecto se registró exitosamente. En unos segundos serás redirigido. Da click en el botón para hacerlo de inmediato.</p>
+								<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning">Ir</a></div>
 							</div>
 						</div>
 					</div>
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							<div class="card-body">
 								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Nombre de proyecto duplicado</h5>
 								<p class="card-text">Este nombre de proyecto ya se encuentra registrado en el portal. Favor de modificarlo para su registro.</p>
-								<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning"><?php echo $lang["duplicado_btn"]; ?></a></div>
+								<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning">Regresar</a></div>
 							</div>
 						</div>
 					</div>
@@ -85,9 +85,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				<div class="col-6 mx-auto">
 					<div class="card shadow">
 						<div class="card-body">
-							<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["error_ttl"]; ?></h5>
-							<p class="card-text"><?php echo $lang["error_txt"]; ?></p>
-							<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning"><?php echo $lang["error_btn"]; ?></a></div>
+							<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Ha ocurrido un error.</h5>
+							<p class="card-text">No se han podido almacenar los datos en la plataforma. Si el error persiste por favor avisa al administrador de JA México.</p>
+							<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning">Regresar</a></div>
 						</div>
 					</div>
 				</div>
@@ -105,9 +105,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<div class="col-6 mx-auto">
 				<div class="card shadow">
 					<div class="card-body">
-						<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["no_access_ttl"]; ?></h5>
-						<p class="card-text"><?php echo $lang["no_access_txt"]; ?></p>
-						<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning"><?php echo $lang["no_access_btn"]; ?></a></div>
+						<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>No puedes acceder a esta sección.</h5>
+						<p class="card-text">En unos segundos serás redirigido. Da click en el botón para hacerlo de inmediato.</p>
+						<div class="text-right mt-5"><a href="../../admin/patrocinadores.php" class="btn btn-warning">Regresar a sección previa</a></div>
 					</div>
 				</div>
 			</div>

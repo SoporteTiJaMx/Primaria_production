@@ -12,18 +12,20 @@ if(
 		$resultadonal = '<div class="carousel-inner">';
 		$i=0;
 		while ($stmt->fetch()) {
-            list($ancho, $alto, $tipo, $atributos) = getimagesize($RAIZ_SITIO.'images/patrocinadores/'.$Patroc_ID.'.jpg');
+            //list($ancho, $alto, $tipo, $atributos) = getimagesize($RAIZ_SITIO.'images/patrocinadores/'.$Patroc_ID.'.jpg');
             //1rem=13 px, 20rem=260px
-            $ratio = ($ancho/$alto)*40;
+			$azar = rand();
+            /* $ratio = ($ancho/$alto)*40;
             if ($ratio<200) {
                 $size = "height='40px'";
             } else {
                 $size = "width='180px'";
-            }
+            }*/
+			$size = "height='38px'";
 			if ($i==0) {
-				$resultadonal .= "<div class='active carousel-item align-middle' style='height: 40px'><img src='".$RAIZ_SITIO_nohttp."images/patrocinadores/".$Patroc_ID.".jpg' ".$size." alt='patroc".$Patroc_ID."' /></div>";
+				$resultadonal .= "<div class='active carousel-item align-middle' style='height: 40px'><img src='".$RAIZ_SITIO."images/patrocinadores/".$Patroc_ID.".jpg?nocache=".$azar."' ".$size." alt='patroc".$Patroc_ID."' /></div>";
 			} else {
-				$resultadonal .= "<div class='carousel-item align-middle' style='height: 40px'><img src='".$RAIZ_SITIO_nohttp."images/patrocinadores/".$Patroc_ID.".jpg' ".$size." alt='patroc".$Patroc_ID."' /></div>";
+				$resultadonal .= "<div class='carousel-item align-middle' style='height: 40px'><img src='".$RAIZ_SITIO."images/patrocinadores/".$Patroc_ID.".jpg?nocache=".$azar."' ".$size." alt='patroc".$Patroc_ID."' /></div>";
 			}
 			$i++;
 		}

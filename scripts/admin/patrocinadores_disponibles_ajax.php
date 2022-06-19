@@ -25,6 +25,7 @@ if(
 	        <tbody>";
 
 	while ($result=$stmt->fetch()) {
+		$azar = rand();
 		if(is_file('../../images/patrocinadores/'. $Patroc_ID .'.jpg')){
 			$imagen = '../images/patrocinadores/'. $Patroc_ID .'.jpg';
 		} else {
@@ -32,7 +33,7 @@ if(
 		}
 		$tabla.="<tr>
 			<td class='align-middle'>" . $Patroc_nombre . "</td>
-			<td class='d-flex justify-content-center'><img src='" . $imagen . "' alt='Logo de " . $Patroc_nombre . "'  height='25'></td>
+			<td class='d-flex justify-content-center'><img src='" . $imagen . "?nocache=".$azar."' alt='Logo de " . $Patroc_nombre . "'  height='25'></td>
 			<td class='align-middle text-center'>
 				<div class='checkbox checkbox-green' style='cursor:pointer'>
 					<input type='checkbox' class='custom-control-input select_asociar_patroc' id=" . $Patroc_ID . " style='cursor:pointer'>

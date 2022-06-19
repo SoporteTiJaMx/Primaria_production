@@ -1,11 +1,12 @@
 <?php
 include_once('../funciones.php');
 include_once('../conexion.php');
+/*
 if(isset($_SESSION['lang'])){
 	require "../../lang/".$_SESSION["lang"].".php";
 }else{
 	require "../../lang/ES-MX.php";
-}
+}*/
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	if (isset($_POST["csrf"]) && $_POST["csrf"] == $_SESSION["token"]) {
@@ -37,9 +38,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						<div class="col-6 mx-auto">
 							<div class="card shadow">
 								<div class="card-body">
-									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["exito_ttl"]; ?></h5>
-									<p class="card-text"><?php echo $lang["exito_txt"]; ?></p>
-									<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning"><?php echo $lang["exito_btn"]; ?></a></div>
+									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Datos guardados exitosamente.</h5>
+									<p class="card-text">Los datos se guardaron exitosamente. En unos segundos serás redirigido. Da click en el botón para hacerlo de inmediato.</p>
+									<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning">Regresar al programa</a></div>
 								</div>
 							</div>
 						</div>
@@ -56,9 +57,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						<div class="col-6 mx-auto">
 							<div class="card shadow">
 								<div class="card-body">
-									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["error_ttl"]; ?></h5>
-									<p class="card-text"><?php echo $lang["error_txt"]; ?></p>
-									<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning"><?php echo $lang["error_btn"]; ?></a></div>
+									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Ha ocurrido un error.</h5>
+									<p class="card-text">No se han podido almacenar los datos en la plataforma. Si el error persiste por favor avisa al administrador de JA México.</p>
+									<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning">Regresar</a></div>
 								</div>
 							</div>
 						</div>
@@ -76,9 +77,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<div class="col-6 mx-auto">
 						<div class="card shadow">
 							<div class="card-body">
-								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["duplicado_ttl"]; ?></h5>
-								<p class="card-text"><?php echo $lang["duplicado_txt"]; ?></p>
-								<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning"><?php echo $lang["duplicado_btn"]; ?></a></div>
+								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Usuario(s) duplicado(s).</h5>
+								<p class="card-text">Uno o más de los usuarios que deseas ingresar ya tienen un registro en el portal. Modifica el 'Usuario' para ingresarlo. Revisa en el apartado de administración correspondiente para revisarlo.</p>
+								<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning">Regresar</a></div>
 							</div>
 						</div>
 					</div>
@@ -97,9 +98,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				<div class="col-6 mx-auto">
 					<div class="card shadow">
 						<div class="card-body">
-							<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["error_ttl"]; ?></h5>
-							<p class="card-text"><?php echo $lang["error_txt"]; ?></p>
-							<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning"><?php echo $lang["error_btn"]; ?></a></div>
+							<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Ha ocurrido un error.</h5>
+							<p class="card-text">No se han podido almacenar los datos en la plataforma. Si el error persiste por favor avisa al administrador de JA México.</p>
+							<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning">Regresar</a></div>
 						</div>
 					</div>
 				</div>
@@ -117,9 +118,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<div class="col-6 mx-auto">
 				<div class="card shadow">
 					<div class="card-body">
-						<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i><?php echo $lang["no_access_ttl"]; ?></h5>
-						<p class="card-text"><?php echo $lang["no_access_txt"]; ?></p>
-						<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning"><?php echo $lang["no_access_btn"]; ?></a></div>
+						<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>No puedes acceder a esta sección.</h5>
+						<p class="card-text">En unos segundos serás redirigido. Da click en el botón para hacerlo de inmediato.</p>
+						<div class="text-right mt-5"><a href="../../admin/voluntarios.php" class="btn btn-warning">Regresar a sección previa</a></div>
 					</div>
 				</div>
 			</div>

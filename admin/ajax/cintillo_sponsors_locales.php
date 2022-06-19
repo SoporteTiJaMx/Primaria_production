@@ -5,19 +5,19 @@ if(
 ){
 	include_once('../../scripts/funciones.php');
 	include_once('../../scripts/conexion.php');
-	$Licencia_ID = $_SESSION['licencia_activa'];
     $centro_ID = $_SESSION['centro_ID'];
-	$query = "SELECT patrocinadores.Patroc_ID, patrocinadores.Patroc_tipo, patrocinadores.Patroc_nombre, licencia_patrocinador.Licencia_ID FROM patrocinadores LEFT JOIN licencia_patrocinador ON patrocinadores.Patroc_ID=licencia_patrocinador.Patroc_ID WHERE Licencia_ID=" . $Licencia_ID . " AND Patroc_estatus='Activo' AND Patroc_tipo='Local' AND patrocinadores.Centro_ID=" . $centro_ID . " ORDER BY patrocinadores.Patroc_nombre";
+	$query = "SELECT patrocinadores.Patroc_ID, patrocinadores.Patroc_tipo, patrocinadores.Patroc_nombre FROM patrocinadores WHERE Patroc_estatus='Activo' AND Patroc_tipo='Local' AND patrocinadores.Centro_ID=" . $centro_ID . " ORDER BY patrocinadores.Patroc_nombre";
 	if ($stmt = $con->prepare($query)) {
 		$stmt->execute();
-		$stmt->bind_result($Patroc_ID, $Patroc_tipo, $Patroc_nombre, $Licencia_ID);
+		$stmt->bind_result($Patroc_ID, $Patroc_tipo, $Patroc_nombre);
 		$resultadoloc = '<div class="carousel-inner">';
 		$i=0;
 		while ($stmt->fetch()) {
+			$azar = rand();
 			if ($i==0) {
-				$resultadoloc .= "<div class='active carousel-item'><img  src='".$RAIZ_SITIO_nohttp."images/patrocinadores/".$Patroc_ID.".jpg' height='30px' alt='patroc".$Patroc_ID."' /></div>";
+				$resultadoloc .= "<div class='active carousel-item'><img  src='".$RAIZ_SITIO."images/patrocinadores/".$Patroc_ID.".jpg?nocache=".$azar."' height='30px' alt='patroc".$Patroc_ID."' /></div>";
 			} else {
-				$resultadoloc .= "<div class='carousel-item'><img  src='".$RAIZ_SITIO_nohttp."images/patrocinadores/".$Patroc_ID.".jpg' height='30px' alt='patroc".$Patroc_ID."' /></div>";
+				$resultadoloc .= "<div class='carousel-item'><img  src='".$RAIZ_SITIO."images/patrocinadores/".$Patroc_ID.".jpg?nocache=".$azar."' height='30px' alt='patroc".$Patroc_ID."' /></div>";
 			}
 			$i++;
 		}

@@ -32,7 +32,7 @@ if(
 				$text_i = "text-white";
 			}
 			$acciones = "<td class='align-middle text-center " . $bckgrnd_color . "'>
-				<a class='select_nuevo_estatus' data-target='#modalModificar' data-toggle='modal' style='cursor: pointer'><i class='fas fa-edit " . $text_i . "' data-toggle='tooltip' data-placement='top' data-proyecto='" . $Proyecto_ID . "' data-nombre='" . $result['Proyecto_nombre'] . "' data-estatus='" . $Proyecto_nombre . "' title='Modificar estatus'></i></a>
+				<a class='select_nuevo_estatus' data-target='#modalModificar' data-toggle='modal' style='cursor: pointer'><i class='fas fa-edit " . $text_i . "' data-toggle='tooltip' data-placement='top' data-proyecto='" . $Proyecto_ID . "' data-nombre='" . $Proyecto_nombre . "' data-estatus='" . $Proyecto_nombre . "' title='Modificar estatus'></i></a>
 			</td>";
 
 			$tabla.="

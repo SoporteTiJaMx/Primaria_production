@@ -1,6 +1,5 @@
 <?php
 	include_once('../includes/admin_header.php');
-	include_once('../scripts/funciones.php');
 	include_once('../scripts/conexion.php');
 	include_once('../scripts/conexion2.php');
 	include_once('../admin/side_navbar.php');
@@ -31,7 +30,7 @@
 <script src="../js/responsive.bootstrap4.min.js" crossorigin="anonymous"></script>
 
 <nav class="mx-5 pt-2">
-	<div class="text-right">Estás logeado como: <strong><?php echo $_SESSION["nombre"];?></strong></div>
+	<div class="text-right">Estás logueado como: <strong><?php echo $_SESSION["nombre"];?></strong></div>
 	<br>
 	<div class="nav nav-tabs" id="nav-tab" role="tablist">
 		<a class="nav-item nav-link active" id="nav-proyectos-tab" data-toggle="tab" href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="true">Proyectos</a>
@@ -129,7 +128,7 @@
 		</div>
 		<hr class="oscura">
 		<div class="card shadow mb-5 min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">PAROCINADORES REGISTRADOS</div>
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">PATROCINADORES REGISTRADOS</div>
 			<div class="card-body">
 				<div id="patrocinadores_registrados"></div>
 			</div>
@@ -224,8 +223,8 @@
 							<input name="Proyecto_ID_nuevo_estatus" type="hidden" id="Proyecto_ID_nuevo_estatus" value="">
 							<div>
 								<select name="nuevo_estatus" type="text" id="nuevo_estatus" class="form-control rounded" aria-describedby="tipo_help">
-									<option value="activo"><?php echo $lang["volunt_modal_estatus_2"]; ?></option>
-									<option value="inactivo"><?php echo $lang["volunt_modal_estatus_3"]; ?></option>
+									<option value="activo">Activo</option>
+									<option value="inactivo">Inactivo</option>
 								</select>
 							</div>
 						</div>
@@ -234,20 +233,20 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang["btn_cancelar"]; ?></button>
-				<button type="button" class="btn btn-warning submitBtn" onclick="nuevo_estatus()"><?php echo $lang["volunt_modal_estatus_4"]; ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-warning submitBtn" onclick="nuevo_estatus()">Cambiar estatus</button>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="toast estatus" data-delay="5000" style="position: fixed; top: 10%; right: 2%; z-index: 2000;">
 	<div class="toast-header">
-		<strong class="mr-auto text-primary"><?php echo $lang["volunt_modal_estatus_5"]; ?></strong>
+		<strong class="mr-auto text-primary">Estatus actualizado con éxito</strong>
 		<small class="text-muted"></small>
 		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
 	</div>
 	<div class="toast-body">
-		<?php echo $lang["actualizar_pagina"]; ?>
+		Se actualizará la página para ver los cambios y poder seguir configurando.
 	</div>
 </div>
 
@@ -294,7 +293,7 @@
 		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
 	</div>
 	<div class="toast-body">
-		<?php echo $lang["actualizar_pagina"]; ?>
+		Se actualizará la página para ver los cambios y poder seguir configurando.
 	</div>
 </div>
 
@@ -371,7 +370,7 @@
 				$('[data-toggle="tooltip"]').tooltip();
 
 				$('.select_nuevo_estatus i').click(function(){
-					$('#modalEstatus .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
+					$('#modalEstatus .modal-title').text('Nuevo estatus para ' + $(this).data('nombre'));
 					$('#Proyecto_ID_nuevo_estatus').val($(this).data('proyecto'));
 					$('#nuevo_estatus').val($(this).data('estatus'));
 					$('#modalEstatus').modal('show');
@@ -396,7 +395,7 @@
 				$('ul.pagination').addClass('pagination-sm');
 
 				$('.select_nuevo_estatus2 i').click(function(){
-					$('#modalEstatus2 .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
+					$('#modalEstatus2 .modal-title').text('Nuevo estatus para ' + $(this).data('nombre'));
 					$('#Patrocinador_ID_nuevo_estatus').val($(this).data('patrocinador'));
 					$('#nuevo_estatus2').val($(this).data('estatus'));
 					$('#modalEstatus2').modal('show');
@@ -420,7 +419,7 @@
 				$('ul.pagination').addClass('pagination-sm');
 
 				$('.select_nuevo_estatus2 i').click(function(){
-					$('#modalEstatus2 .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
+					$('#modalEstatus2 .modal-title').text('Nuevo estatus para ' + $(this).data('nombre'));
 					$('#Patrocinador_ID_nuevo_estatus').val($(this).data('patrocinador'));
 					$('#nuevo_estatus2').val($(this).data('estatus'));
 					$('#modalEstatus2').modal('show');

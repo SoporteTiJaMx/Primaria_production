@@ -43,9 +43,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						<div class="col-6 mx-auto">
 							<div class="card shadow">
 								<div class="card-body">
-									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>El grupo se creó exitosamente</h5>
-									<p class="card-text">Sigue tabajando en la plataforma.</p>
-									<div class="text-right mt-5"><a href="../../admin/grupos.php" class="btn btn-warning">Continuar</a></div>
+									<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Datos guardados exitosamente.</h5>
+									<p class="card-text">El grupo se registró exitosamente. En unos segundos serás redirigido. Da click en el botón para hacerlo de inmediato.</p>
+									<div class="text-right mt-5"><a href="../../admin/grupos.php" class="btn btn-warning">Ir</a></div>
 								</div>
 							</div>
 						</div>
@@ -83,7 +83,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						<div class="card shadow">
 							<div class="card-body">
 								<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Hubo un error</h5>
-								<p class="card-text">El nombre de grupo ya está en uso</p>
+								<p class="card-text">El nombre de grupo ya está en uso. Modifícalo por favor.</p>
 								<div class="text-right mt-5"><a href="../../admin/grupos.php" class="btn btn-warning">Regresar</a></div>
 							</div>
 						</div>
@@ -104,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<div class="card shadow">
 						<div class="card-body">
 							<h5 class="card-title mb-5 align-middle"><i class="fas fa-exclamation-circle fa-2x fa-fw ml-2 mr-3 text-pale-green"></i>Ocurrió un error</h5>
-							<p class="card-text">Da clic en "Siguiente" y comunicate con lña oficina de Junior Achievement</p>
+							<p class="card-text">Da clic en "Siguiente" y comunícate con la oficina de Junior Achievement</p>
 							<div class="text-right mt-5"><a href="../../admin/grupos.php" class="btn btn-warning">Siguiente</a></div>
 						</div>
 					</div>

@@ -38,7 +38,7 @@
 	</ul>
 	<hr class="hr-white">
 
-	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0">Bases de Datos</p>
+	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0">Configuración operativa</p>
 	<ul class="nav flex-column mb-0">
 		<li class="nav-item <?php	if ($seccion == 'patrocinadores') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>admin/patrocinadores.php" class="nav-link text-white ml-3">
@@ -57,7 +57,7 @@
 		</li>
 		<li class="nav-item <?php	if ($seccion == 'usuarios') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>admin/usuarios.php" class="nav-link text-white ml-3">
-				<i class="fas fa-users fa-fw mr-3"></i>Usuarios
+				<i class="fas fa-user-plus fa-fw mr-3"></i>Usuarios
 			</a>
 		</li>
 		<li class="nav-item <?php	if ($seccion == 'grupos') { echo 'active'; } ?>">
@@ -67,7 +67,7 @@
 		</li>
 		<li class="nav-item <?php	if ($seccion == 'alumnos') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>admin/alumnos.php" class="nav-link text-white ml-3">
-				<i class="fas fa-users fa-fw mr-3"></i>Alumnos
+				<i class="fas fa-id-card fa-fw mr-3"></i>Alumnos
 			</a>
 		</li>
 	</ul>
@@ -90,9 +90,14 @@
 				<i class="fas fa-exclamation-triangle fa-fw mr-3"></i>Avisos
 			</a>
 		</li>
+		<li class="nav-item <?php	if ($seccion == 'reportes') { echo 'active'; } ?>">
+			<a href="<?php echo $RAIZ_SITIO; ?>admin/reportes.php" class="nav-link text-white ml-3">
+				<i class="fas fa-file-alt fa-fw mr-3"></i>Reportes
+			</a>
+		</li>
 	</ul>
 	<hr class="hr-white">
-	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0" data-toggle="collapse" data-target="#collapse_sesions">Cursos <i class="fas fa-angle-right fa-fw mr-3"></i></p>
+	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0" data-toggle="collapse" data-target="#collapse_sesions">Programas <i class="fas fa-angle-right fa-fw mr-3"></i></p>
 	<div id="collapse_sesions" class="collapse.show">
 		<ul class="nav flex-column mb-0">
 			<?php if ($_SESSION["subseccion_general"]>94) { ?>
@@ -139,24 +144,13 @@
 			<?php } ?>
 		</ul>
 	</div>
-	<?php /*
 	<hr class="hr-white">
 
-	<ul class="nav flex-column mb-0">
-		<li class="nav-item">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/reportes.php" class="nav-link text-white ml-3">
-				<i class="fas fa-file-alt fa-fw mr-3"></i>Reportes
-			</a>
-		</li>
-	</ul>
-*/?>
 	<div class="d-none d-lg-block separar-cintillo"></div>
 	<div class="d-none d-lg-block band-sponsors text-center text-black-green">
 		<label>Agradecemos a:</label>
 		<div id="band-sponnal" class="carousel slide mt-1 mb-2" data-ride="carousel"></div>
-		<?php if (isset($_SESSION["licencia_activa"])) { ?>
-			<div id="band-sponloc" class="carousel slide mb-2" data-ride="carousel"></div>
-		<?php } ?>
+		<div id="band-sponloc" class="carousel slide mb-2" data-ride="carousel"></div>
 	</div>
 
 </div>
@@ -173,7 +167,7 @@
 		?>
 
 		$.ajax({
-			url: <?php echo "'" . $RAIZ_SITIO_nohttp . "admin/ajax/cintillo_sponsors_nacionales.php'";?>,
+			url: <?php echo "'" . $RAIZ_SITIO . "admin/ajax/cintillo_sponsors_nacionales.php'";?>,
 			success: function(data)
 			{
 				$("#band-sponnal").html(data);
@@ -184,21 +178,17 @@
 			interval: 3000,
 		})
 
-		<?php if (isset($_SESSION["licencia_activa"])) { ?>
-			$.ajax({
-				url: <?php echo "'" . $RAIZ_SITIO_nohttp . "admin/ajax/cintillo_sponsors_locales.php'";?>,
-				success: function(data)
-				{
-					$("#band-sponloc").html(data);
-				}
-			});
+		$.ajax({
+			url: <?php echo "'" . $RAIZ_SITIO . "admin/ajax/cintillo_sponsors_locales.php'";?>,
+			success: function(data)
+			{
+				$("#band-sponloc").html(data);
+			}
+		});
 
-			$('#band-sponloc').carousel({
-				interval: 2500,
-			})
-
-		<?php } ?>
-
+		$('#band-sponloc').carousel({
+			interval: 2500,
+		})
 	});
 
 </script>
