@@ -8,6 +8,22 @@
     header('Location: ../error.php');
   } else {
 	$centro_ID = $_SESSION["centro_ID"];
+	$stmt2=$con2->prepare("SELECT instituciones.Institucion_ID, instituciones.Institucion_nombre FROM instituciones WHERE instituciones.Centro_ID=$centro_ID");
+	$stmt2->execute();
+	$stmt2->bind_result($inst_id, $inst_nombre);
+	$select_inst_options = "";
+	while($stmt2->fetch()){
+		$select_inst_options .= '
+			<option value="-1" class="">Selecciona una institución</option>
+			<option value="0" class="">Escuelas sin institución</option>
+			<option value="'.$inst_id.'" class="">'.$inst_nombre.'</option>
+		';
+	}
+	$select_inst = '
+		<select name="institucion_id_1" id="institucion_id_1" class="form-control" onchange="escuelas_inst();">
+			'.$select_inst_options.'
+		</select>
+	';
 	$stmt=$con->prepare("SELECT centro_proyecto.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = proyectos.Proyecto_ID WHERE Proyecto_estatus='activo' AND centro_proyecto.Centro_ID = ? ORDER BY Proyecto_nombre");
 	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
@@ -53,14 +69,28 @@
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-white rounded mx-auto"></div></div>
 
 					<div class="form-row pb-1">
-						<div class="form-group col-3"></div>
-						<div class="form-group col-6">
+						<div class="form-group col-12 offset-lg-3 col-lg-6">
+							<label for="institucion_id_1" class="control-label text-dark-gray">Institución:</label>
+							<?php echo $select_inst; ?>
+							<small id="institucion_id_1_help" class="form-text text-dark-gray w200">Selecciona la institución a la que asociarás este proyecto.</small>
+						</div>
+					</div>
+					<div class="form-row pb-1">
+						<div class="form-group col-12 offset-lg-3 col-lg-6">
+							<label for="select_escuela_1" class="control-label text-dark-gray">Escuela:</label>
+							<select name="select_escuela_1" id="select_escuela_1" class="form-control" onchange="activar_proyecto();" require disabled>
+								
+							</select>
+							<small id="select_escuela_1_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás este proyecto</small>
+						</div>
+					</div>
+					<div class="form-row pb-1">
+						<div class="form-group col-12 offset-lg-3 col-lg-6">
 							<label for="name" class="control-label text-dark-gray">Proyecto:</label>
-							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required>
+							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required disabled>
 							<small id="name_help" class="form-text text-dark-gray w200">Distintos proyectos pueden tener patrocinadores diferentes</small>
 						</div>
 						<?php $validaciones[] = array('name', 'name_input', "'Error en Nombre de Proyecto. Favor de corregir.'"); ?>
-						<div class="form-group col-3"></div>
 					</div>
 					<div class="row pb-1">
 						<div class="col text-center">
@@ -559,6 +589,38 @@
 				setTimeout(function(){location.reload()}, 2000);
 			}
 		});
+	}
+	function escuelas_inst(){
+		let institucion_id = document.getElementById("institucion_id_1").value;
+		if(institucion_id >= 0){
+			//console.log(institucion_id);
+			$("#select_escuela_1").removeAttr('disabled');
+		}else{
+			$("#select_escuela_1").attr("disabled", true);
+			$("#name").attr("disabled", true);
+		}
+		var param = {
+			"Institucion_ID": institucion_id,
+			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+		};
+		$.ajax({
+			data: param,
+			url: 'ajax/escuelas_inst_filtro.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$("#select_escuela_1").html(data);
+			}
+		})
+	}
+	function activar_proyecto(){
+		let escuela_id = document.getElementById("select_escuela_1").value;
+		if(escuela_id > 0){
+			$("#name").removeAttr('disabled');
+		}else{
+			$("#name").attr("disabled", true);
+		}
 	}
 
 </script>
