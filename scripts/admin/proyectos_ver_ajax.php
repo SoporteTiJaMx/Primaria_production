@@ -8,7 +8,7 @@ if(
 ){
 	include_once('../conexion.php');
 	$centro_ID = $_SESSION["centro_ID"];
-	$stmt=$con->prepare("SELECT proyectos.Proyecto_ID, proyectos.Proyecto_nombre, proyectos.Proyecto_estatus FROM proyectos LEFT JOIN escuelas ON proyectos.Escuela_ID = escuelas.Escuela_ID WHERE Proyecto_estatus = 'activo' AND escuelas.Centro_ID = ? ORDER BY Proyecto_nombre");
+	$stmt=$con->prepare("SELECT proyectos.Proyecto_ID, proyectos.Proyecto_nombre, proyectos.Proyecto_estatus FROM proyectos WHERE Proyecto_estatus = 'activo' AND Centro_ID = ? ORDER BY Proyecto_nombre");
 	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
 	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre, $Proyecto_estatus);

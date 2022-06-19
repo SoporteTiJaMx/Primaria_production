@@ -162,19 +162,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 				$stmt->close();
 				$stmt2->close();
-				if($tipo == 4){
-					$stmt_id=$con->prepare("SELECT Asesor_ID FROM asesores WHERE User_ID = ?");
-					$stmt_id -> bind_param("i", $User_ID);
-					$stmt_id -> execute();
-					$stmt_id -> bind_result($id);
-					$stmt_id->fetch();
-					$stmt_id -> close();
 
-					$stmt_p = $con->prepare("INSERT INTO asesores_x_grupo (Asesor_ID) VALUES (?)");
-					$stmt_p -> bind_param("i", $id);
-					$stmt_p -> execute();
-					$stmt_p -> close();
-				}
 				echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=../../admin/usuarios.php'>";
 	  			include_once('../../includes/header.php');
 					echo $pantalla_exito;

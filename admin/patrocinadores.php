@@ -68,10 +68,10 @@
 					<h5 class="text-center pb-3">INGRESA NUEVO PROYECTO</h5>
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-white rounded mx-auto"></div></div>
 
-					<div class="form-row pb-1">
+					<!-- <div class="form-row pb-1">
 						<div class="form-group col-12 offset-lg-3 col-lg-6">
 							<label for="institucion_id_1" class="control-label text-dark-gray">Institución:</label>
-							<?php echo $select_inst; ?>
+							<?php //echo $select_inst; ?>
 							<small id="institucion_id_1_help" class="form-text text-dark-gray w200">Selecciona la institución a la que asociarás este proyecto.</small>
 						</div>
 					</div>
@@ -83,11 +83,11 @@
 							</select>
 							<small id="select_escuela_1_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás este proyecto</small>
 						</div>
-					</div>
+					</div> -->
 					<div class="form-row pb-1">
 						<div class="form-group col-12 offset-lg-3 col-lg-6">
 							<label for="name" class="control-label text-dark-gray">Proyecto:</label>
-							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required disabled>
+							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required>
 							<small id="name_help" class="form-text text-dark-gray w200">Distintos proyectos pueden tener patrocinadores diferentes</small>
 						</div>
 						<?php $validaciones[] = array('name', 'name_input', "'Error en Nombre de Proyecto. Favor de corregir.'"); ?>
@@ -590,7 +590,7 @@
 			}
 		});
 	}
-	function escuelas_inst(){
+	/* function escuelas_inst(){
 		let institucion_id = document.getElementById("institucion_id_1").value;
 		if(institucion_id >= 0){
 			//console.log(institucion_id);
@@ -601,7 +601,7 @@
 		}
 		var param = {
 			"Institucion_ID": institucion_id,
-			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+			"Centro_ID": <?php //echo $_SESSION["centro_ID"]; ?>
 		};
 		$.ajax({
 			data: param,
@@ -621,7 +621,7 @@
 		}else{
 			$("#name").attr("disabled", true);
 		}
-	}
+	} */
 
 </script>
 

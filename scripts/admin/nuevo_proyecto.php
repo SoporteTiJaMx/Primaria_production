@@ -10,18 +10,18 @@ include_once('../conexion.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	if ((isset($_POST["csrf"]) && $_POST["csrf"] == $_SESSION["token"]) AND isset($_POST["name"])) {
 		//$Admin_ID = $_SESSION["Admin_ID"];
-		$Escuela_ID = (isset($_POST["select_escuela_1"])) ? sanitizar($_POST["select_escuela_1"]) : null;
+		//$Escuela_ID = (isset($_POST["select_escuela_1"])) ? sanitizar($_POST["select_escuela_1"]) : null;
 		$centro_ID = (isset($_POST["centro_ID"])) ? sanitizar($_POST["centro_ID"]) : null;
 		$Proyecto_nombre = (isset($_POST["name"])) ? sanitizar($_POST["name"]) : null;
 
-		$stmt3 = $con->prepare("SELECT * FROM proyectos WHERE Proyecto_nombre = ? AND Escuela_ID = ?");
-		$stmt3 ->bind_param("si", $Proyecto_nombre, $Escuela_ID);
+		$stmt3 = $con->prepare("SELECT * FROM proyectos WHERE Proyecto_nombre = ? AND Centro_ID = ?");
+		$stmt3 ->bind_param("si", $Proyecto_nombre, $centro_ID);
 		$stmt3->execute();
 		$res = $stmt3->fetch();
 		$estatus = "Activo";
 		if($res == false){ //no existe proyecto
-			$stmt=$con->prepare("INSERT INTO proyectos (Proyecto_nombre, Proyecto_estatus, Escuela_ID) VALUES (?, ?, ?)");
-			$stmt->bind_param("ssi", $Proyecto_nombre, $estatus, $Escuela_ID);
+			$stmt=$con->prepare("INSERT INTO proyectos (Proyecto_nombre, Proyecto_estatus, Centro_ID) VALUES (?, ?, ?)");
+			$stmt->bind_param("ssi", $Proyecto_nombre, $estatus, $centro_ID);
 			$stmt->execute();
 			$stmt->close();
 			echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=../../admin/patrocinadores.php'>";
