@@ -13,8 +13,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$Patroc_nombre = (isset($_POST["nombre"])) ? sanitizar($_POST["nombre"]) : null;
 		$Centro_ID = (isset($_POST["centro_ID1"])) ? sanitizar($_POST["centro_ID1"]) : null;
 
-		$stmt3 = $con->prepare("SELECT * FROM patrocinadores WHERE Patroc_nombre = ?");
-		$stmt3 -> bind_param("s", $Patroc_nombre);
+		$stmt3 = $con->prepare("SELECT * FROM patrocinadores WHERE Patroc_nombre = ? AND Centro_ID = ?");
+		$stmt3 -> bind_param("si", $Patroc_nombre, $Centro_ID);
 		$stmt3->execute();
 		$res = $stmt3->fetch();
 		if($res == false){ //no existe patrocinador
@@ -24,8 +24,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$stmt->bind_param("isss", $Centro_ID, $patroc_tipo, $Patroc_nombre, $patroc_estatus);
 			$stmt->execute();
 			$stmt->close();
-			$stmt_id=$con->prepare("SELECT Patroc_ID FROM patrocinadores WHERE Patroc_nombre = ?");
-			$stmt_id -> bind_param("s", $Patroc_nombre);
+			$stmt_id=$con->prepare("SELECT Patroc_ID FROM patrocinadores WHERE Patroc_nombre = ? AND Centro_ID = ?");
+			$stmt_id -> bind_param("si", $Patroc_nombre, $Centro_ID);
 			$stmt_id -> execute();
 			$stmt_id -> bind_result($Patroc_ID);
 			$stmt_id->fetch();
