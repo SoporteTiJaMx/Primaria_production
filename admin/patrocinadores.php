@@ -179,7 +179,7 @@
 					<div class="col-4"></div>
 				</div>
 
-				<div class="row col-sm-12">
+				<div class="row">
 					<div class="col-sm-6">
 						<div class="card shadow">
 							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Patrocinadores disponibles (activos)</div>

@@ -7,6 +7,7 @@ if(
 	include_once('../conexion.php');
 
 	$Proyecto_ID = $_POST['Proyecto_ID'];
+	$Centro_ID = $_SESSION['centro_ID'];
 
 	$stmt=$con->prepare("SELECT patrocinadores.Patroc_ID, patrocinadores.Patroc_nombre, proyectos.Proyecto_nombre FROM patrocinadores LEFT JOIN proyecto_patrocinador ON proyecto_patrocinador.Patroc_ID = patrocinadores.Patroc_ID LEFT JOIN proyectos ON proyectos.Proyecto_ID = proyecto_patrocinador.Proyecto_ID WHERE patrocinadores.Patroc_estatus='activo' AND patrocinadores.Patroc_tipo = 'Local' AND proyecto_patrocinador.Proyecto_ID=?");
 	$stmt->bind_param('i', $Proyecto_ID);

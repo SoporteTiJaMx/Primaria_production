@@ -7,9 +7,10 @@ if(
 	include_once('../conexion.php');
 
 	$Proyecto_ID = $_POST['Proyecto_ID'];
+	$Centro_ID = $_SESSION['centro_ID'];
 
-	$stmt=$con->prepare("SELECT patrocinadores.Patroc_nombre, patrocinadores.Patroc_estatus, patrocinadores.Patroc_ID FROM patrocinadores WHERE patrocinadores.Patroc_tipo = 'Local' AND patrocinadores.Patroc_ID NOT IN (SELECT proyecto_patrocinador.Patroc_ID FROM proyecto_patrocinador WHERE proyecto_patrocinador.Proyecto_ID=?)");
-	$stmt->bind_param('i', $Proyecto_ID);
+	$stmt=$con->prepare("SELECT patrocinadores.Patroc_nombre, patrocinadores.Patroc_estatus, patrocinadores.Patroc_ID FROM patrocinadores WHERE patrocinadores.Patroc_tipo = 'Local' AND patrocinadores.Centro_ID = ? AND patrocinadores.Patroc_ID NOT IN (SELECT proyecto_patrocinador.Patroc_ID FROM proyecto_patrocinador WHERE proyecto_patrocinador.Proyecto_ID=?)");
+	$stmt->bind_param('ii', $Centro_ID, $Proyecto_ID);
 	$stmt->execute();
 	$stmt->bind_result($Patroc_nombre, $Patroc_estatus, $Patroc_ID);
 
