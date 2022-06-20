@@ -24,16 +24,20 @@
 			'.$select_inst_options.'
 		</select>
 	';
-	$stmt=$con->prepare("SELECT centro_proyecto.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = proyectos.Proyecto_ID WHERE Proyecto_estatus='activo' AND centro_proyecto.Centro_ID = ? ORDER BY Proyecto_nombre");
+	$stmt=$con->prepare("SELECT proyectos.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos WHERE Proyecto_estatus='activo' AND Centro_ID = ? ORDER BY Proyecto_nombre");
 	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
 	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre);
 	$select_proyectos = "<select name='select_proyectos' type='text' id='select_proyectos' class='form-control rounded' onchange='validar_proyecto();'>";
+	$select_proyectos2 = "<select name='select_proyectos2' type='text' id='select_proyectos2' class='form-control rounded' onchange='validar_proyecto2();'>";
 	$select_proyectos.= "<option value='0'>Selecciona proyecto</option>";
+	$select_proyectos2.= "<option value='0'>Selecciona proyecto</option>";
 	while ($result=$stmt->fetch()) {
 		$select_proyectos.="<option value='" . $Proyecto_ID . "'>" . $Proyecto_nombre . "</option>";
+		$select_proyectos2.="<option value='" . $Proyecto_ID . "'>" . $Proyecto_nombre . "</option>";
 	}
 	$select_proyectos.="</select>";
+	$select_proyectos2.="</select>";
 
 	$_SESSION["token"] = md5(uniqid(mt_rand(), true));
 ?>
@@ -215,21 +219,46 @@
 
 	<!-- Tab para crear un nuevo proyecto -->
 	<div class="tab-pane fade" id="nav-proyecprog" role="tabpanel" aria-labelledby="nav-proyecprog-tab">
-		<div class="card shadow min-width:300px">
-			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Asociar Proyectos a Programas</div>
+		<div class="card shadow mb-5 pb-5">
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">ASIGNAR PROGRAMAS A PROYECTOS</div>
 			<div class="card-body">
-				<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/asociar_proyecto_programa.php" method="post" class="mt-1">
-					<input name="csrf4" type="hidden" id="csrf4" value="<?php echo $_SESSION['token']; ?>">
-					<input name="centro_ID4" type="hidden" id="centro_ID4" value="<?php echo $_SESSION['centro_ID']; ?>">
-					<div id="proyecto_programa"></div>
-					<div class="row pb-1">
-						<div class="col text-center">
-							<?php if ($_SESSION['tipo'] == "Admin") {?>
-								<button type="submit" class="btn btn-warning text-center px-5 my-2" name="btn_asignar" id="btn_asignar" >Asignar</button>
-							<?php } ?>
+				<h6 class="text-center text-dark_gray pt-1 pb-1">Asocia a los programas que forman parte de cada proyecto. Selecciona un proyecto para iniciar.</h6>
+				<div class="row pb-3">
+					<div class="col-12 offset-lg-4 col-lg-4">
+						<?php echo $select_proyectos2; ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="card shadow">
+							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Programas disponibles</div>
+							<div class="card-body">
+								<p class="card-text pb-2">Se muestran los programas activos no asociados con el proyecto.</p>
+								<div id="proyec_disponibles"></div>
+								<div class="row pb-1 pt-2">
+									<div class="col text-center">
+										<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="asociar_proyec('Si')">Asociar programas seleccionados</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</form>
+					<div class="col-sm-6">
+						<div class="card shadow">
+							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Patrocinadores participantes del proyecto</div>
+							<div class="card-body">
+								<p class="card-text pb-2">Deselecciona los programas que no participan más del proyecto.</p>
+								<div id="proyec_asociados"></div>
+								<div class="row pb-1 pt-2">
+									<div class="col text-center">
+										<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="asociar_proyec('No')">Dejar de asociar patrocinadores</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
