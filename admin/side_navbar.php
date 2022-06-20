@@ -70,21 +70,6 @@
 				<i class="fas fa-id-card fa-fw mr-3"></i>Alumnos
 			</a>
 		</li>
-	</ul>
-	<hr class="hr-white">
-
-	<p class="text-white font-weight-bold text-uppercase px-3 small py-1 mb-0">Operación</p>
-	<ul class="nav flex-column mb-0">
-		<li class="nav-item <?php	if ($seccion == 'licencias') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/licencias.php" class="nav-link text-white ml-3">
-				<i class="fas fa-user-check fa-fw mr-3"></i>Licencias
-			</a>
-		</li>
-		<li class="nav-item <?php	if ($seccion == 'configuracion') { echo 'active'; } ?>">
-			<a href="<?php echo $RAIZ_SITIO; ?>admin/configuracion.php" class="nav-link text-white ml-3">
-				<i class="fas fa-cog fa-fw mr-3"></i>Configuración
-			</a>
-		</li>
 		<li class="nav-item <?php	if ($seccion == 'avisos') { echo 'active'; } ?>">
 			<a href="<?php echo $RAIZ_SITIO; ?>admin/avisos.php" class="nav-link text-white ml-3">
 				<i class="fas fa-exclamation-triangle fa-fw mr-3"></i>Avisos
