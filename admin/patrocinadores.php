@@ -248,7 +248,7 @@
 						<div class="card shadow">
 							<div class="card-header text-center bg-dark-blue text-dark text-spaced-3">Patrocinadores participantes del proyecto</div>
 							<div class="card-body">
-								<p class="card-text pb-2">Deselecciona los programas que no participan más del proyecto.</p>
+								<p class="card-text pb-2">Deselecciona los programas que no froman parte del proyecto.</p>
 								<div id="proyec_asociados"></div>
 								<div class="row pb-1 pt-2">
 									<div class="col text-center">
@@ -610,6 +610,79 @@
 		$.ajax({
 			data:  parametros,
 			url: '../scripts/admin/asociar_patroc_ajax.php',
+			type: 'post',
+			success: function(data)
+			{
+				$('.toast_titulo').html('Patrocinador asociado/cancelado con éxito');
+				$('.toast').toast('show');
+				setTimeout(function(){location.reload()}, 2000);
+			}
+		});
+	}
+	function validar_proyecto2(){
+		var select_proyectos = document.getElementById("select_proyectos2").value;
+		if (select_proyectos==0) {
+			$('#proyec_disponibles').html("");
+			$('#proyec_asociados').html("");
+		} else {
+			$('#proyec_disponibles').html("");
+			$('#proyec_asociados').html("");
+			var parametros = {
+				"Proyecto_ID" : select_proyectos,
+			};
+			$.ajax({ //Patrocinadores disponibles
+			  data:  parametros,
+			  url: '../scripts/admin/programas_disponibles_ajax.php',
+			  type: 'post',
+			  success: function(data)
+			  {
+				console.log(data);
+			  	$('#proyec_disponibles').html(data)
+				$('#proyectos_disp_table').DataTable( {
+					"pagingType": "simple",
+					responsive: true,
+					"pageLength": 100,
+				} );
+				$('#proyectos_disp_table_wrapper div.row').addClass('col-sm-12');
+			  }
+			});
+			$.ajax({ //Patrocinadores asociados
+			  data:  parametros,
+			  url: '../scripts/admin/programas_asociados_ajax.php',
+			  type: 'post',
+			  success: function(data)
+			  {
+			  	$('#proyec_asociados').html(data)
+				$('#proyectos_asoc_table').DataTable( {
+					"pagingType": "simple",
+					responsive: true,
+					"pageLength": 100,
+				} );
+				$('#proyectos_asoc_table_wrapper div.row').addClass('col-sm-12');
+			  }
+			});
+		}
+	}
+	function asociar_proyec(opcion){
+		var select_proyectos = document.getElementById("select_proyectos2").value;
+		var Array_asociar_proyec = new Array();
+		if (opcion == "Si") {
+			$('input[type=checkbox].select_asociar_proyec:checked').each(function() {
+				Array_asociar_proyec.push($(this).prop("id"));
+			});
+		} else if (opcion == "No") {
+			$('input[type=checkbox].select_desasociar_proyec:not(:checked)').each(function() {
+				Array_asociar_proyec.push($(this).prop("id"));
+			});
+		}
+		var parametros = {
+			"Proyecto_ID" : select_proyectos,
+			"Array_asociar_proyec" : Array_asociar_proyec,
+			"Asociar" : opcion,
+		};
+		$.ajax({
+			data:  parametros,
+			url: '../scripts/admin/asociar_program_ajax.php',
 			type: 'post',
 			success: function(data)
 			{
