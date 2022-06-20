@@ -10,11 +10,11 @@
     header('Location: ../error.php');
   } else {
 	$centro_ID = $_SESSION["centro_ID"];
-	$stmt=$con->prepare("SELECT centro_proyecto.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos LEFT JOIN centro_proyecto ON centro_proyecto.Proyecto_ID = proyectos.Proyecto_ID WHERE Proyecto_estatus='activo' AND centro_proyecto.Centro_ID = ? ORDER BY Proyecto_nombre");
+	$stmt=$con->prepare("SELECT proyectos.Proyecto_ID, proyectos.Proyecto_nombre FROM proyectos WHERE Proyecto_estatus='activo' AND Centro_ID = ? ORDER BY Proyecto_nombre");
 	$stmt->bind_param("i", $centro_ID);
 	$stmt->execute();
 	$stmt->bind_result($Proyecto_ID, $Proyecto_nombre);
-	$select_proyectos = "<select name='select_proyectos' type='text' id='select_proyectos' class='form-control rounded' onchange='validar_proyectos();'>";
+	$select_proyectos = "<select name='select_proyectos' type='text' id='select_proyectos' class='form-control rounded' onchange='validar_proyectos();' disabled>";
 	$select_proyectos2 = "<select name='select_proyectos2' type='text' id='select_proyectos2' class='form-control rounded'>";
 	$select_proyectos.= "<option value='0'>Selecciona proyecto</option>";
 	$select_proyectos2.= "<option value='0'>Selecciona proyecto</option>";
@@ -26,26 +26,25 @@
 	$select_proyectos2.="</select>";
 	$stmt->close();
 
-	$stmt2=$con->prepare("SELECT Escuela_ID, Escuela_nombre FROM escuelas WHERE Escuela_estatus= 'Activa' AND Centro_ID = ? ORDER BY Escuela_nombre");
-	$stmt2->bind_param("i", $centro_ID);
+	$stmt2=$con2->prepare("SELECT instituciones.Institucion_ID, instituciones.Institucion_nombre FROM instituciones WHERE instituciones.Centro_ID=$centro_ID");
 	$stmt2->execute();
-	$stmt2->bind_result($Escuela_ID, $Escuela_nombre);
-	$options = "";
+	$stmt2->bind_result($inst_id, $inst_nombre);
+	$select_inst_options = "";
 	while($stmt2->fetch()){
-		$options .= '
-			<option value="'.$Escuela_ID.'" class="">'.$Escuela_nombre.'</option>
+		$select_inst_options .= '
+			<option value="-1" class="">Selecciona una institución</option>
+			<option value="0" class="">Escuelas sin institución</option>
+			<option value="'.$inst_id.'" class="">'.$inst_nombre.'</option>
 		';
 	}
-	$select_escuela1 ='
-		<select name="select_escuela1" id="select_escuela1" class="form-control" required>
-			<option value="0">Selecciona Escuela</option>
-			'.$options.'
+	$select_inst = '
+		<select name="institucion_id_1" id="institucion_id_1" class="form-control" onchange="escuelas_inst();">
+			'.$select_inst_options.'
 		</select>
 	';
-	$select_escuela2 ='
-		<select name="select_escuela2" id="select_escuela2" class="form-control" required>
-			<option value="0">Selecciona Escuela</option>
-			'.$options.'
+	$select_inst2 = '
+		<select name="institucion_id_2" id="institucion_id_2" class="form-control" onchange="escuelas_inst2();">
+			'.$select_inst_options.'
 		</select>
 	';
 
@@ -65,7 +64,7 @@
 	<div class="nav nav-tabs" id="nav-tab" role="tablist">
 		<a class="nav-item nav-link active" id="nav-crear-tab" data-toggle="tab" href="#nav-crear" role="tab" aria-controls="nav-crear" aria-selected="true">Crear Grupos</a>
 		<a class="nav-item nav-link" id="nav-gestion-tab" data-toggle="tab" href="#nav-gestion" role="tab" aria-controls="nav-gestion" aria-selected="false">Gestionar Grupos</a>
-		<!-- <a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar voluntario a grupo</a> -->
+		<a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar voluntario a grupo</a>
 	</div>
 </nav>
 <div class="tab-content mx-5 pt-2 pb-5" id="nav-tabContent" >
@@ -82,12 +81,21 @@
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-dark rounded mx-auto"></div></div>
 					<div class="row pb-3">
 						<div class="col-12 offset-lg-3 col-lg-6">
-							<?php echo $select_proyectos; ?>
+							<?php echo $select_inst; ?>
+						</div>
+					</div>
+					<div class="form-row pb-1">
+						<div class="form-group col-12 offset-lg-3 col-lg-6">
+							<label for="select_escuela_1" class="control-label text-dark-gray">Escuela:</label>
+							<select name="select_escuela_1" id="select_escuela_1" class="form-control" onchange="activar_proyecto();" require disabled>
+								
+							</select>
+							<small id="select_escuela_1_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás el grupo</small>
 						</div>
 					</div>
 					<div class="row pb-3">
 						<div class="col-12 offset-lg-3 col-lg-6">
-							<?php echo $select_escuela1; ?>
+							<?php echo $select_proyectos; ?>
 						</div>
 					</div>
 
@@ -95,11 +103,42 @@
 						<div class="form-group col-3"></div>
 						<div class="form-group col-6">
 							<label for="name" class="control-label text-dark-gray">Nombre:</label>
-							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required>
+							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required disabled>
 							<small id="name_help" class="form-text text-dark-gray w200"><?php echo $lang["grupos_name_sttl"]; ?></small>
 						</div>
 						<?php $validaciones[] = array('name', 'name_input', "'".$lang["grupos_name_err"]."'"); ?>
 						<div class="form-group col-3"></div>
+					</div>
+					<div class="row pb-3">
+						<div class="col-12 offset-lg-3 col-lg-6">
+							<label for="" class="control-label text-dark-gray">Grado al que pertenece:</label>
+						</div>
+						<div class="col-12 offset-lg-3 col-lg-6">
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo1" name="grado" value="1" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo1">1</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo2" name="grado" value="2" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo2">2</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo3" name="grado" value="3" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo3">3</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo4" name="grado" value="4" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo4">4</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo5" name="grado" value="5" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo5">5</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="grupo6" name="grado" value="6" class="custom-control-input" disabled>
+								<label class="custom-control-label" for="grupo6">6</label>
+							</div>
+						</div>
 					</div>
 
 					<div class="row pb-1">
@@ -163,6 +202,20 @@
 		<div class="card shadow mb-5 pb-5 min-width:300px">
 			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">Administrar Grupos</div>
 			<div class="card-body">
+				<div class="row pb-3">
+					<div class="col-12 offset-lg-3 col-lg-6">
+						<?php echo $select_inst2; ?>
+					</div>
+				</div>
+				<div class="form-row pb-1">
+					<div class="form-group col-12 offset-lg-3 col-lg-6">
+						<label for="select_escuela_2" class="control-label text-dark-gray">Escuela:</label>
+						<select name="select_escuela_2" id="select_escuela_2" class="form-control" onchange="activar_proyecto2();" require disabled>
+							
+						</select>
+						<small id="select_escuela_2_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás el grupo</small>
+					</div>
+				</div>
 				<div id="result"></div>
 			</div>
 		</div>
@@ -270,34 +323,6 @@
 	$(document).ready(function(){
 		$('.errores_docs').hide();
 		$.ajax({
-			url: '../scripts/admin/grupos_administrar_ajax.php',
-			success: function(data)
-			{
-				console.log(data);
-				$('#result').html(data)
-				$('#grupos_table').DataTable({
-					"pagingType": "simple",
-			        "pageLength": 100,
-			        "scrollX": true,
-			        "order": [[1, "asc"]]
-				});
-				$('#grupos_table_wrapper div.row').addClass('col-sm-12');
-				$('.dataTables_length').parent().addClass('d-flex justify-content-start');
-				$('.dataTables_filter').parent().addClass('d-flex justify-content-end');
-				$('ul.pagination').addClass('pagination-sm');
-
-			    $('[data-toggle="tooltip"]').tooltip();
-
-				$('.select_nuevo_estatus i').click(function(){
-					$('#modalEstatus .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
-					$('#Grupo_ID_nuevo_estatus').val($(this).data('grupo'));
-					$('#nuevo_estatus').val($(this).data('estatus'));
-					$('#modalEstatus').modal('show');
-				})
-
-			}
-		})
-		$.ajax({
 			url: '../scripts/admin/voluntario_asignar_ajax.php',
 			success: function(data)
 			{
@@ -326,9 +351,23 @@
 		if (select_proyectos==0) {
 			$('.error').hide();
 			$('#guardar').prop('disabled', true);
+			$('#name').prop('disabled', true);
+			$('#grupo1').prop('disabled', true);
+			$('#grupo2').prop('disabled', true);
+			$('#grupo3').prop('disabled', true);
+			$('#grupo4').prop('disabled', true);
+			$('#grupo5').prop('disabled', true);
+			$('#grupo6').prop('disabled', true);
 		} else {
 			$('.error').show();
 			$('#guardar').prop('disabled', false);
+			$('#name').prop('disabled', false);
+			$('#grupo1').prop('disabled', false);
+			$('#grupo2').prop('disabled', false);
+			$('#grupo3').prop('disabled', false);
+			$('#grupo4').prop('disabled', false);
+			$('#grupo5').prop('disabled', false);
+			$('#grupo6').prop('disabled', false);
 		}
 	}
 
@@ -395,6 +434,97 @@
 				setTimeout(function(){location.reload()}, 3000);
 			}
 		});
+	}
+	function escuelas_inst(){
+		let institucion_id = document.getElementById("institucion_id_1").value;
+		if(institucion_id >= 0){
+			//console.log(institucion_id);
+			$("#select_escuela_1").removeAttr('disabled');
+		}else{
+			$("#select_escuela_1").attr("disabled", true);
+			$("#name").attr("disabled", true);
+		}
+		var param = {
+			"Institucion_ID": institucion_id,
+			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+		};
+		$.ajax({
+			data: param,
+			url: 'ajax/escuelas_inst_filtro.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$("#select_escuela_1").html(data);
+			}
+		})
+	}
+	function activar_proyecto(){
+		let escuela_id = document.getElementById("select_escuela_1").value;
+		if(escuela_id > 0){
+			$("#select_proyectos").removeAttr('disabled');
+		}else{
+			$("#select_proyectos").attr("disabled", true);
+		}
+	}
+	function activar_proyecto2(){
+		let escuela_id = document.getElementById("select_escuela_2").value;
+		param = {
+			"Escuela_ID": escuela_id,
+		}
+		$.ajax({
+			data: param,
+			url: '../scripts/admin/grupos_administrar_ajax.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$('#result').html(data)
+				$('#grupos_table').DataTable({
+					"pagingType": "simple",
+			        "pageLength": 100,
+			        "scrollX": true,
+			        "order": [[1, "asc"]]
+				});
+				$('#grupos_table_wrapper div.row').addClass('col-sm-12');
+				$('.dataTables_length').parent().addClass('d-flex justify-content-start');
+				$('.dataTables_filter').parent().addClass('d-flex justify-content-end');
+				$('ul.pagination').addClass('pagination-sm');
+
+			    $('[data-toggle="tooltip"]').tooltip();
+
+				$('.select_nuevo_estatus i').click(function(){
+					$('#modalEstatus .modal-title').text('<?php echo $lang["volunt_modal_estatus_6"]; ?>' + $(this).data('nombre'));
+					$('#Grupo_ID_nuevo_estatus').val($(this).data('grupo'));
+					$('#nuevo_estatus').val($(this).data('estatus'));
+					$('#modalEstatus').modal('show');
+				})
+
+			}
+		})
+	}
+	function escuelas_inst2(){
+		let institucion_id = document.getElementById("institucion_id_2").value;
+		if(institucion_id >= 0){
+			console.log(institucion_id);
+			$("#select_escuela_2").removeAttr('disabled');
+		}else{
+			$("#select_escuela_2").attr("disabled", true);
+		}
+		var param = {
+			"Institucion_ID": institucion_id,
+			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+		};
+		$.ajax({
+			data: param,
+			url: 'ajax/escuelas_inst_filtro.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$("#select_escuela_2").html(data);
+			}
+		})
 	}
 </script>
 

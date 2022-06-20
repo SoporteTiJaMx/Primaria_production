@@ -8,9 +8,11 @@ if(
 ){
 	include_once('../conexion.php');
 	include_once('../conexion2.php');
-	$stmt=$con->prepare("SELECT DISTINCT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre, grupos.Grupo_estatus, proyectos.Proyecto_nombre FROM grupos LEFT JOIN proyectos ON proyectos.Proyecto_ID = grupos.Proyecto_ID LEFT JOIN asesores_x_grupo ON asesores_x_grupo.Grupo_ID = grupos.Grupo_ID WHERE Grupo_estatus = 'activo' ORDER BY Grupo_nombre");
+	$Escuela_ID = $_POST["Escuela_ID"];
+	$stmt=$con->prepare("SELECT DISTINCT grupos.Grupo_ID, grupos.Proyecto_ID, grupos.Grupo_nombre, grupos.Grupo_estatus, grupos.Grado FROM grupos WHERE Grupo_estatus = 'activo' AND Escuela_ID = ? ORDER BY Grupo_nombre");
+	$stmt->bind_param("i", $Escuela_ID);
 	$stmt->execute();
-	$stmt->bind_result($Grupo_ID, $Proyecto_ID, $Grupo_nombre, $Grupo_estatus, $Proyecto_nombre);
+	$stmt->bind_result($Grupo_ID, $Proyecto_ID, $Grupo_nombre, $Grupo_estatus, $Grado);
 
 	$tabla="<table class='table table-striped table-hover' id='grupos_table' style='width:100%'>";
 	$tabla.="
