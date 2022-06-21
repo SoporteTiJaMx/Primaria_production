@@ -47,6 +47,16 @@
 			'.$select_inst_options.'
 		</select>
 	';
+	$select_inst3 = '
+		<select name="institucion_id_3" id="institucion_id_3" class="form-control" onchange="escuelas_inst3();">
+			'.$select_inst_options.'
+		</select>
+	';
+	$select_inst4 = '
+		<select name="institucion_id_4" id="institucion_id_4" class="form-control" onchange="escuelas_inst4();">
+			'.$select_inst_options.'
+		</select>
+	';
 
 	$_SESSION["token"] = md5(uniqid(mt_rand(), true));
 ?>
@@ -64,7 +74,8 @@
 	<div class="nav nav-tabs" id="nav-tab" role="tablist">
 		<a class="nav-item nav-link active" id="nav-crear-tab" data-toggle="tab" href="#nav-crear" role="tab" aria-controls="nav-crear" aria-selected="true">Crear Grupos</a>
 		<a class="nav-item nav-link" id="nav-gestion-tab" data-toggle="tab" href="#nav-gestion" role="tab" aria-controls="nav-gestion" aria-selected="false">Gestionar Grupos</a>
-		<a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar voluntario a grupo</a>
+		<a class="nav-item nav-link" id="nav-volgrup-tab" data-toggle="tab" href="#nav-volgrup" role="tab" aria-controls="nav-volgrup" aria-selected="false">Asignar Voluntarios a Grupos</a>
+		<a class="nav-item nav-link" id="nav-proggrup-tab" data-toggle="tab" href="#nav-proggrup" role="tab" aria-controls="nav-proggrup" aria-selected="false">Asignar Programas a Grupos</a>
 	</div>
 </nav>
 <div class="tab-content mx-5 pt-2 pb-5" id="nav-tabContent" >
@@ -81,7 +92,9 @@
 					<div class="text-center"><div id="error" style="display: none" class="bg-danger w-50 py-2 text-center text-dark rounded mx-auto"></div></div>
 					<div class="row pb-3">
 						<div class="col-12 offset-lg-3 col-lg-6">
+							<label for="institucion_id_1" class="control-label text-dark-gray">Institución:</label>
 							<?php echo $select_inst; ?>
+							<small id="institucion_id_1_help" class="form-text text-dark-gray w200">Selecciona la institución a la que asociarás el grupo</small>
 						</div>
 					</div>
 					<div class="form-row pb-1">
@@ -95,7 +108,9 @@
 					</div>
 					<div class="row pb-3">
 						<div class="col-12 offset-lg-3 col-lg-6">
+							<label for="select_proyectos" class="control-label text-dark-gray">Proyecto:</label>
 							<?php echo $select_proyectos; ?>
+							<small id="select_proyectos_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás el grupo</small>
 						</div>
 					</div>
 
@@ -104,9 +119,9 @@
 						<div class="form-group col-6">
 							<label for="name" class="control-label text-dark-gray">Nombre:</label>
 							<input type="text" class="form-control rounded text-center" name="name" id="name" aria-describedby="name_help" required disabled>
-							<small id="name_help" class="form-text text-dark-gray w200"><?php echo $lang["grupos_name_sttl"]; ?></small>
+							<small id="name_help" class="form-text text-dark-gray w200">Nombre de Grupo (ej, 1°A, 3°B, etc)</small>
 						</div>
-						<?php $validaciones[] = array('name', 'name_input', "'".$lang["grupos_name_err"]."'"); ?>
+						<?php $validaciones[] = array('name', 'name_input', "'Ocurrió un error'"); ?>
 						<div class="form-group col-3"></div>
 					</div>
 					<div class="row pb-3">
@@ -138,6 +153,9 @@
 								<input type="radio" id="grupo6" name="grado" value="6" class="custom-control-input" disabled>
 								<label class="custom-control-label" for="grupo6">6</label>
 							</div>
+						</div>
+						<div class="col-12 offset-lg-3 col-lg-6">
+							<small id="name_help" class="form-text text-dark-gray w200">Indica el grado del grupo que estás cargando.</small>
 						</div>
 					</div>
 
@@ -204,7 +222,9 @@
 			<div class="card-body">
 				<div class="row pb-3">
 					<div class="col-12 offset-lg-3 col-lg-6">
+						<label for="institucion_id_1" class="control-label text-dark-gray">Institución:</label>
 						<?php echo $select_inst2; ?>
+						<small id="institucion_id_1_help" class="form-text text-dark-gray w200">Selecciona la institución para filtrar escuelas.</small>
 					</div>
 				</div>
 				<div class="form-row pb-1">
@@ -213,7 +233,7 @@
 						<select name="select_escuela_2" id="select_escuela_2" class="form-control" onchange="activar_proyecto2();" require disabled>
 							
 						</select>
-						<small id="select_escuela_2_help" class="form-text text-dark-gray w200">Selecciona la escuela a la que asociarás el grupo</small>
+						<small id="select_escuela_2_help" class="form-text text-dark-gray w200">Selecciona la escuela para filtrar grupos.</small>
 					</div>
 				</div>
 				<div id="result"></div>
@@ -225,12 +245,56 @@
 		<div class="card shadow mb-5 pb-5 min-width:300px">
 			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">Asignar Voluntario a Grupo</div>
 			<div class="card-body">
-				<div id="result2"></div>
+			<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/registrar_voluntarios.php" method="post" class="mt-1" enctype="multipart/form-data">
+				<input name="csrf1" type="hidden" id="csrf1" value="<?php echo $_SESSION['token']; ?>">
+				<div class="col-12 offset-lg-3 col-lg-6">
+					<label for="institucion_id_3" class="control-label text-dark-gray">Institución:</label>
+					<?php echo $select_inst3; ?>
+					<small id="institucion_id_3_help" class="form-text text-dark-gray w200">Selecciona la institución para filtrar escuelas.</small>
+				</div>
+				<div class="form-group col-12 offset-lg-3 col-lg-6">
+					<label for="select_escuela_3" class="control-label text-dark-gray">Escuela:</label>
+					<select name="select_escuela_3" id="select_escuela_3" class="form-control" onchange="activar_proyecto3();" require disabled>
+						
+					</select>
+					<small id="select_escuela_3_help" class="form-text text-dark-gray w200">Selecciona la escuela para filtrar grupos.</small>
+				</div>
+				<div class="col-12" id="result2"></div>
 				<div class="row pb-1 pt-2">
 					<div class="col text-center">
-						<button type="button" class="btn btn-warning text-center px-5 my-2" onclick="guardar_voluntario_por_grupo()">Asignar Voluntarios</button>
+						<button type="submit" class="btn btn-warning text-center px-5 my-2">Asignar Voluntarios</button>
 					</div>
 				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+	<!-- Tab para asignar programas a grupos -->
+	<div class="tab-pane fade mb-5" id="nav-proggrup" role="tabpanel" aria-labelledby="nav-proggrup-tab">
+		<div class="card shadow mb-5 pb-5 min-width:300px">
+			<div class="card-header text-center bg-dark-blue text-dark text-spaced-3" id="card-title">Asignar Voluntario a Grupo</div>
+			<div class="card-body">
+			<form action="<?php echo $RAIZ_SITIO; ?>scripts/admin/registrar_programas.php" method="post" class="mt-1" enctype="multipart/form-data">
+				<input name="csrf2" type="hidden" id="csrf2" value="<?php echo $_SESSION['token']; ?>">
+				<div class="col-12 offset-lg-3 col-lg-6">
+					<label for="institucion_id_4" class="control-label text-dark-gray">Institución:</label>
+					<?php echo $select_inst4; ?>
+					<small id="institucion_id_4_help" class="form-text text-dark-gray w200">Selecciona la institución para filtrar escuelas.</small>
+				</div>
+				<div class="form-group col-12 offset-lg-3 col-lg-6">
+					<label for="select_escuela_4" class="control-label text-dark-gray">Escuela:</label>
+					<select name="select_escuela_4" id="select_escuela_4" class="form-control" onchange="activar_proyecto4();" require disabled>
+						
+					</select>
+					<small id="select_escuela_4_help" class="form-text text-dark-gray w200">Selecciona la escuela para filtrar grupos.</small>
+				</div>
+				<div class="col-12" id="result3"></div>
+				<div class="row pb-1 pt-2">
+					<div class="col text-center">
+						<button type="submit" class="btn btn-warning text-center px-5 my-2">Asignar Programas</button>
+					</div>
+				</div>
+			</form>
 			</div>
 		</div>
 	</div>
@@ -322,23 +386,7 @@
 
 	$(document).ready(function(){
 		$('.errores_docs').hide();
-		$.ajax({
-			url: '../scripts/admin/voluntario_asignar_ajax.php',
-			success: function(data)
-			{
-				$('#result2').html(data)
-				$('#vol_grupo_table').DataTable({
-					"pagingType": "simple",
-			        "pageLength": 100,
-			        "scrollX": true,
-			        "order": [[0, "asc"]]
-				});
-				$('#vol_grupo_table_wrapper div.row').addClass('col-sm-12');
-				$('.dataTables_length').parent().addClass('d-flex justify-content-start');
-				$('.dataTables_filter').parent().addClass('d-flex justify-content-end');
-				$('ul.pagination').addClass('pagination-sm');
-			}
-		})
+		
 	});
 
 	$(".custom-file-input").on("change", function() {
@@ -467,6 +515,29 @@
 			$("#select_proyectos").attr("disabled", true);
 		}
 	}
+	function escuelas_inst2(){
+		let institucion_id = document.getElementById("institucion_id_2").value;
+		if(institucion_id >= 0){
+			console.log(institucion_id);
+			$("#select_escuela_2").removeAttr('disabled');
+		}else{
+			$("#select_escuela_2").attr("disabled", true);
+		}
+		var param = {
+			"Institucion_ID": institucion_id,
+			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+		};
+		$.ajax({
+			data: param,
+			url: 'ajax/escuelas_inst_filtro.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$("#select_escuela_2").html(data);
+			}
+		})
+	}
 	function activar_proyecto2(){
 		let escuela_id = document.getElementById("select_escuela_2").value;
 		param = {
@@ -503,13 +574,13 @@
 			}
 		})
 	}
-	function escuelas_inst2(){
-		let institucion_id = document.getElementById("institucion_id_2").value;
+	function escuelas_inst3(){
+		let institucion_id = document.getElementById("institucion_id_3").value;
 		if(institucion_id >= 0){
-			console.log(institucion_id);
-			$("#select_escuela_2").removeAttr('disabled');
+			//console.log(institucion_id);
+			$("#select_escuela_3").removeAttr('disabled');
 		}else{
-			$("#select_escuela_2").attr("disabled", true);
+			$("#select_escuela_3").attr("disabled", true);
 		}
 		var param = {
 			"Institucion_ID": institucion_id,
@@ -522,7 +593,76 @@
 			success: function(data)
 			{
 				//console.log(data);
-				$("#select_escuela_2").html(data);
+				$("#select_escuela_3").html(data);
+			}
+		})
+	}
+	function activar_proyecto3(){
+		let escuela_id = document.getElementById("select_escuela_3").value;
+		param = {
+			"Escuela_ID": escuela_id,
+		}
+		$.ajax({
+			data: param,
+			url: '../scripts/admin/voluntario_mostrar_ajax.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$('#result2').html(data)
+				$('#vol_grupo_table').DataTable({
+					"pagingType": "simple",
+			        "pageLength": 100,
+			        "scrollX": true,
+			        "order": [[1, "asc"]]
+				});
+				$('#vol_grupo_table_wrapper div.row').addClass('col-sm-12');
+			}
+		})
+	}
+	function escuelas_inst4(){
+		let institucion_id = document.getElementById("institucion_id_4").value;
+		if(institucion_id >= 0){
+			//console.log(institucion_id);
+			$("#select_escuela_4").removeAttr('disabled');
+		}else{
+			$("#select_escuela_4").attr("disabled", true);
+		}
+		var param = {
+			"Institucion_ID": institucion_id,
+			"Centro_ID": <?php echo $_SESSION["centro_ID"]; ?>
+		};
+		$.ajax({
+			data: param,
+			url: 'ajax/escuelas_inst_filtro.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$("#select_escuela_4").html(data);
+			}
+		})
+	}
+	function activar_proyecto4(){
+		let escuela_id = document.getElementById("select_escuela_4").value;
+		param = {
+			"Escuela_ID": escuela_id,
+		}
+		$.ajax({
+			data: param,
+			url: '../scripts/admin/grupos_proyecto_ajax.php',
+			type: 'post',
+			success: function(data)
+			{
+				//console.log(data);
+				$('#result3').html(data)
+				$('#prog_grupo_table').DataTable({
+					"pagingType": "simple",
+			        "pageLength": 100,
+			        "scrollX": true,
+			        "order": [[1, "asc"]]
+				});
+				$('#prog_grupo_table_wrapper div.row').addClass('col-sm-12');
 			}
 		})
 	}
